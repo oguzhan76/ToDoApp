@@ -1,57 +1,12 @@
 import React, { useState, useRef } from 'react';
-import Rodal from 'rodal';
-import 'rodal/lib/rodal.css';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-
-
-const TodoModal = (props) => {
-
-  const close = () => {
-    props.setVisible(false);
-  }
-
-  const handleNewTodo = (e) => {
-    e.preventDefault();
-    console.log(e.target.elements.input.value);
-    close();
-  }
-
-  return (
-    <Rodal animation='door' visible={props.visible} onClose={close}>
-      <form onSubmit={handleNewTodo}>
-        <h1>Add a To Do</h1>
-        <input autoFocus name='input'></input>  
-      </form>
-    </Rodal>
-  )
-}
-
-const TodoList = () => {
-  return (
-    <div>
-    </div>
-  )
-}
-
-
-const Dashboard = () => {
-  const [ modalVisible, setModalVisible ] = useState(false);
-
-  return (
-    <div>
-      <button onClick={() => setModalVisible(true)} >New</button>
-      {'// dropdown sorting' }
-      <TodoList />
-      <TodoModal visible={modalVisible} setVisible={setModalVisible}/>
-    </div>
-  )
-}
+import App from './components/App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Dashboard />
+    <App />
   </React.StrictMode>
 );
 
