@@ -28,14 +28,28 @@ body {
 .list-row-item {
     display: flex;
     flex-direction: row;
-}
 
-.list-row-item p {
-    margin: 0 0 0 0;
-    padding: 0.8rem 1rem 0 1rem;
-}
+    p {
+        margin: 0 0 0 0;
+        padding: 0.8rem 1rem 0 1rem; 
+    }
+    
+    .list-row-item-date {
+        padding: 0.5rem 0 0 1rem;
+        font-size: $s-size;
+        color: gray;
+    }
 
-.list-row-item-date {
-    font-size: $s-size;
-    color: gray;
+    button {
+        height: $l-size;
+        width: $l-size;
+    }
+
+    button:hover {
+        color: rgb(103, 100, 100);
+    }
+
+    input {
+        height: $l-size;
+    }
 }
