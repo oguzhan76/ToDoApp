@@ -5,7 +5,6 @@ import 'rodal/lib/rodal.css';
 import timestamp from "time-stamp";
 
 const TodoModal = (props) => {
-
     const close = () => {
         props.setVisible(false);
     }

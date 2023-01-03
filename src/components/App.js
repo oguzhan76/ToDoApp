@@ -1,6 +1,8 @@
 import React, {useState} from "react";
+import AppContext from "../contexts/AppContext";
 import TodoModal from './TodoModal';
 import TodoList from './TodoList';
+import Header from "./Header";
 
 const App = () => {
     const [ todoList, setTodoList ] = useState([]);
@@ -17,12 +19,11 @@ const App = () => {
     }
   
     return (
-      <div>
-        <button onClick={() => setModalVisible(true)} >New</button>
-        {'// dropdown sorting' }
-        <TodoList list={todoList} handleDelete={handleDelete} />
-        <TodoModal visible={modalVisible} setVisible={setModalVisible} handleAddToList={handleAddToList}/>
-      </div>
+      <AppContext.Provider value={{modalVisible, setModalVisible, todoList, setTodoList, handleDelete}}>
+        <Header />
+        <TodoList />
+        <TodoModal visible={modalVisible} setVisible={setModalVisible} handleAddToList={handleAddToList} type={'new'}/>
+      </AppContext.Provider>
     )
 }
 

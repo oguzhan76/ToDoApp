@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { ImPencil, ImBin2 } from 'react-icons/im';
+import AppContext from "../contexts/AppContext";
 
 const TodoItem = (props) => {
+    const { handleDelete } = useContext(AppContext);
+    const [item, setItem] = useState(props.item);
+
     return (
         <div className="list-row">
             <div className="list-row-item">
                 <input type="checkbox"></input>
-                <p>{props.item.body}</p>
+                <div>
+                    <p>{props.item.body}</p>
+                    <p className="list-row-item-date">{props.item.date}</p>
+                </div>
             </div>
             <div className="list-row-item">
-                <p className="list-row-item-date">{props.item.date}</p>
-                <button onClick={() => props.handleDelete(props.item)}>Del</button>
+                <button onClick={() => handleDelete(props.item)}><ImBin2 /></button>
+                <button onClick={() => props.handleEdit(props.item)}><ImPencil /></button>
             </div>
         </div>
     )
