@@ -19,10 +19,10 @@ const App = () => {
     }
   
     return (
-      <AppContext.Provider value={{modalVisible, setModalVisible, todoList, setTodoList, handleDelete}}>
+      <AppContext.Provider value={{modalVisible, setModalVisible, todoList, setTodoList, handleDelete, handleAddToList}}>
         <Header />
         <TodoList />
-        <TodoModal visible={modalVisible} setVisible={setModalVisible} handleAddToList={handleAddToList} type={'new'}/>
+        <TodoModal type={'new'}/>
       </AppContext.Provider>
     )
 }
