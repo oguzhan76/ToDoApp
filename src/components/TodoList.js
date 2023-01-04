@@ -1,24 +1,24 @@
-import React, { useContext } from "react"
+import React, { useContext, useMemo } from "react"
 import TodoItem from "./TodoItem";
 import AppContext from "../contexts/AppContext";
 
-const TodoList = (props) => {
-    const { todoList } = useContext(AppContext);
+const TodoList = () => {
+    const { filter, todoList } = useContext(AppContext);
 
-    const filterList = (filter) => {
+    const filteredList = useMemo(() => {
         if (filter === 'all') return todoList;
-
+  
         if (filter === 'complete') {
             return todoList.filter((item) => item.complete === true);
         }
         if (filter === 'incomplete') {
             return todoList.filter((item) => item.complete === false);
         }
-    }
+    }, [filter, todoList]);
 
     return (
       <div className="todo-list">
-        {filterList('all').map((i) => <TodoItem key={i.body} item={i} />)}
+        {filteredList && filteredList.map((i) => <TodoItem key={i.body} item={i} />)}
       </div>
     )
 }

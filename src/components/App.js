@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState} from "react";
 import AppContext from "../contexts/AppContext";
 import TodoModal from './TodoModal';
 import TodoList from './TodoList';
@@ -6,23 +6,18 @@ import Header from "./Header";
 
 const App = () => {
     const [ todoList, setTodoList ] = useState([]);
-    const [ modalVisible, setModalVisible ] = useState(false);
-  
-    const handleAddToList = (newTodo) => {
-        // TODO: handover to modal with context api
-        console.log('handle on dashboard', newTodo);
-        setTodoList([...todoList, newTodo]);
-    }
+    const [ showModal, setShowModal ] = useState(false);
+    const [ filter, setFilter ] = useState('all');
 
     const handleDelete = (todo) => {
         console.log('deleted', todo.body);
     }
   
     return (
-      <AppContext.Provider value={{modalVisible, setModalVisible, todoList, setTodoList, handleDelete, handleAddToList}}>
+      <AppContext.Provider value={{ showModal, setShowModal, todoList, setTodoList, handleDelete, filter, setFilter }}>
         <Header />
         <TodoList />
-        <TodoModal type={'new'}/>
+        <TodoModal />
       </AppContext.Provider>
     )
 }
