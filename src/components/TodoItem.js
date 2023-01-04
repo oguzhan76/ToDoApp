@@ -3,22 +3,24 @@ import { ImPencil, ImBin2 } from 'react-icons/im';
 import AppContext from "../contexts/AppContext";
 
 const TodoItem = ({ item }) => {
-    const { handleDelete,  todoList } = useContext(AppContext);
+    const { todoList, setTodoList, setShowModal, setEditItem } = useContext(AppContext);
     const [ischecked, setIsChecked ] = useState(item.complete);
 
     const handleCheckboxChange = () => {
         setIsChecked((prev) => !prev);
-        item.complete = !ischecked;
-        // update database
-        todoList.map((i) => {
-            return i.body === item.body ? item : i;
-        })
-        console.log(todoList);
-        console.log(item);
+        item.complete = !ischecked; // ! becuase setischecked won't be effective until component rerenders
+        setTodoList(todoList.map((i) => i.body === item.body ? item : i ));
         // setTodoList([...todoList]);
     }
 
-    const handleEdit = () => {}
+    const handleEdit = () => {
+        setEditItem(item);
+        setShowModal(true);
+    }
+
+    const handleDelete = () => {
+        setTodoList(todoList.filter(todo => item.body !== todo.body));
+    }
 
     return (
         <div className="list-row">

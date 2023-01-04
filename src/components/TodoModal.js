@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import AppContext from '../contexts/AppContext';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
@@ -7,19 +7,40 @@ import timestamp from "time-stamp";
 
 const TodoModal = () => {
     const input = useRef();
-    const { showModal, setShowModal, todoList, setTodoList } = useContext(AppContext);
+    const { showModal, 
+            setShowModal, 
+            todoList, 
+            setTodoList, 
+            editItem, 
+            setEditItem } = useContext(AppContext);
 
-    const handleCreate = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(input.current.value);
+            if(editItem)
+                EditTodo();
+            else
+                CreateTodo();
+        e.target.reset();
+        setShowModal(false);
+    }
+
+    const CreateTodo = () => {
         const newTodo = { 
             complete: false,
             body: input.current.value.trim(),
             date: timestamp('MM/DD/YYYY HH:mm')
         }
+        setTodoList([...todoList, newTodo]);        
+    }
 
-        setTodoList([...todoList, newTodo]);
-        e.target.reset();
+    const EditTodo = () => {
+        const newItem = {...editItem, body: input.current.value.trim()};
+        setTodoList(todoList.map(item => item === editItem ? newItem : item));
+        setEditItem(null);
+    }
+
+    const onClose = () => {
+        if(editItem) setEditItem(null);
         setShowModal(false);
     }
 
@@ -29,11 +50,11 @@ const TodoModal = () => {
         animation='door' 
         onAnimationEnd={() => input.current.focus()} 
         visible={showModal} 
-        onClose={() => setShowModal(false)}
+        onClose={onClose}
       >
-        <form className='modal-form' onSubmit={handleCreate}>
+        <form className='modal-form' onSubmit={handleSubmit}>
           <h1>Add a To Do</h1>
-          <textarea className='modal-input' ref={input} autoFocus={true} name='input' required></textarea>
+          <textarea className='modal-input' ref={input} autoFocus={true} name='input' defaultValue={editItem ? editItem.body : ''} required></textarea>
           <div className='modal-button-container '>
             <button className='button modal-button' type='submit'>Done</button>
           </div>
