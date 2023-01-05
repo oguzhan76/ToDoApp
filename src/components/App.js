@@ -32,9 +32,11 @@ const App = () => {
             setTodoList, 
             filter, 
             setFilter }}>
-        <Header />
-        <TodoList />
-        <TodoModal />
+        <div className="app">
+          <Header />
+          <TodoList />
+          <TodoModal />
+        </div>
       </AppContext.Provider>
     )
 }

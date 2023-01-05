@@ -1,0 +1,22 @@
+.header {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.dropdown {
+    background-color: $darkApp;
+    color: $buttonText;
+    border: 1px solid white;
+    border-radius: 0.5rem;
+    border-color: $buttonText;
+    font-size: large;
+    font-weight: bold;
+    width: 13rem;
+    height: 3rem;
+}
+
+.dropdown:focus {
+    outline: none;
+}

@@ -1,0 +1,9 @@
+@import '../base/settings';
+
+.app {
+    background-color: $darkApp;
+    padding: 2rem;
+    border-radius: 1rem;
+    flex-grow: 1;
+    max-width: 50%;
+}

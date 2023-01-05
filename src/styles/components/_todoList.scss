@@ -1,0 +1,63 @@
+@import '../base/settings';
+
+.list-row {
+    background-color: $darkList;
+    border-radius: 0.8rem;
+    font-size: $m-size;
+    min-height: 3.6rem;
+    margin-bottom: 0.6rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.list-row-item {
+    display: flex;
+    flex-direction: row;
+    padding: .5rem;
+    text-decoration-thickness: 0.4rem;
+
+    p {
+        white-space: pre-line;
+        margin: 0 0 0 0;
+        padding: 0.8rem 1rem 0 1rem; 
+        text-align: justify;
+    }
+    
+    .list-row-item-date {
+        padding: 0.5rem 0 0 1rem;
+        font-size: $s-size;
+        color: rgb(96, 96, 96);
+    }
+
+    button {
+        background-color: rgba($color: #000000, $alpha: 0);
+        color: darken($darkList,40%);
+        border: none;
+        padding: 0 0 0 0;
+        height: $l-size;
+        width: $l-size;
+        font-size: $m-size;
+    }
+
+    button:hover {
+        color: lighten($button, 30%);
+    }
+}
+
+.checkbox {
+    background-color: $darkApp;
+    font: inherit;
+    color: currentColor;
+    width: 1.15em;
+    height: 1.15em;
+    margin-top: 1.5rem;
+    border: 0.15em solid currentColor;
+    border-radius: 0.15em;
+    border-color: #cfc9c9;
+}
+
+
+.checkbox:checked::before {
+    transform: scale(1);
+}

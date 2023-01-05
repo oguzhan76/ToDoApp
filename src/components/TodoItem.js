@@ -25,9 +25,11 @@ const TodoItem = ({ item }) => {
     return (
         <div className="list-row">
             <div className="list-row-item">
-                <input type="checkbox" checked={ischecked} onChange={handleCheckboxChange}></input>
+                <input className="checkbox" type="checkbox" checked={ischecked} onChange={handleCheckboxChange}></input>
                 <div>
-                    <p style={{textDecoration: item.complete ? 'line-through' : 'none'}}>{item.body}</p>
+                    <p style={{textDecoration: item.complete ? 'line-through' : 'none', 
+                                textDecorationThickness: 'inherit'}}>{item.body}
+                    </p>
                     <p className="list-row-item-date">{item.date}</p>
                 </div>
             </div>

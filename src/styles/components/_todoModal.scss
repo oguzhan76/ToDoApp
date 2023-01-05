@@ -1,0 +1,47 @@
+.rodal-mask {
+    background: rgba($color: #000000, $alpha: 0.7);
+}
+
+.rodal-dialog {
+    background-color: $darkApp;
+    border: none;
+    border-radius: 1rem;
+    max-width: 85%;
+}
+
+.modal-form {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content:end;
+
+    h2 {
+        color: $list;
+    }
+}
+
+.modal-button-container {
+    text-align: right;
+}
+
+.modal-button {
+    width: 7rem;
+}
+
+.modal-input {
+    background-color: $app;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 0.5rem;
+    resize: none;
+    min-height: 100%;
+    flex-grow: 100;
+    margin-bottom: 2rem;
+}
+
+.modal-input:focus {
+    outline: none;
+    border: none;
+    box-shadow: 0 0 10px #719ECE;
+}

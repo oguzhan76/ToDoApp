@@ -53,7 +53,7 @@ const TodoModal = () => {
         onClose={onClose}
       >
         <form className='modal-form' onSubmit={handleSubmit}>
-          <h1>Add a To Do</h1>
+          <h2>Add a To Do</h2>
           <textarea className='modal-input' ref={input} autoFocus={true} name='input' defaultValue={editItem ? editItem.body : ''} required></textarea>
           <div className='modal-button-container '>
             <button className='button modal-button' type='submit'>Done</button>

@@ -1,0 +1,35 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family:'Trebuchet MS', Arial, sans-serif;
+    font-size: $m-size;
+    background-color: $darkBG;
+
+}
+
+#root {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 7rem;
+}
+
+button {
+    background-color: $darkApp;
+    color: $buttonText;
+    border: 1px solid white;
+    border-color: $buttonText;
+    border-radius: 0.5rem;
+    font-size: large;
+    font-weight: bold;
+    width: 10rem;
+    height: 3rem;
+    cursor: pointer;
+}
+
+button:hover {
+    color: lighten($buttonText, 20%);
+    border-color: lighten($buttonText, 20%);
+}
