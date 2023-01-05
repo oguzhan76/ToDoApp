@@ -34,8 +34,8 @@ const TodoItem = ({ item }) => {
                 </div>
             </div>
             <div className="list-row-item">
-                <button onClick={() => handleDelete(item)}><ImBin2 /></button>
                 <button onClick={() => handleEdit(item)}><ImPencil /></button>
+                <button onClick={() => handleDelete(item)}><ImBin2 /></button>
             </div>
         </div>
     )

@@ -6,17 +6,35 @@
 }
 
 .dropdown {
-    background-color: $darkApp;
+    background-color: $buttonBG;
     color: $buttonText;
-    border: 1px solid white;
+    border: none;
+    // border: 2px solid $buttonText;
     border-radius: 0.5rem;
-    border-color: $buttonText;
     font-size: large;
     font-weight: bold;
     width: 13rem;
-    height: 3rem;
+    height: 4rem;
 }
 
 .dropdown:focus {
+    background-color: $buttonBG;
     outline: none;
 }
+
+.dropdown:hover {
+    background-color: $buttonBGHover;
+    color: $buttonTextHover;
+}
+
+.dropdown:hover:focus {
+    background-color: $buttonBG;
+    color: $buttonText;
+}
+
+option:hover {
+    -webkit-background-origin: none;
+    background-origin: none;
+    background-color: $buttonBGHover;
+    color: red;
+}   

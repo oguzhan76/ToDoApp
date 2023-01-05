@@ -10,14 +10,17 @@ $custom: #b8cfb8;
 $background:  #7389AE;
 $app: #B5BAD0;
 $list:#E0E0E2;
-$button: rgba(50, 124, 77, 0.85);
-$buttonText: rgb(219, 219, 227);
+
 $modal: #404c74;
-
-$darkBG: darken(#7389AE, 40%);
-$darkApp: darken(#B5BAD0, 40%);
-$darkList: darken(#E0E0E2, 20%);
-
+// rgb(219, 219, 227); 232
+//rgb(238, 245, 117);
+$darkBG: darken($background, 40%);
+$darkApp: darken($app, 40%);
+$darkList: darken($list, 20%);
+$buttonBG: lighten($darkApp, 30%);
+$buttonBGHover: lighten($darkApp, 35%);
+$buttonText: rgb(117, 245, 200);
+$buttonTextHover: darken($buttonText, 10%);
 
 
 // Spacing

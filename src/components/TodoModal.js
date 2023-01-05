@@ -30,7 +30,7 @@ const TodoModal = () => {
             body: input.current.value.trim(),
             date: timestamp('MM/DD/YYYY HH:mm')
         }
-        setTodoList([...todoList, newTodo]);        
+        setTodoList([newTodo, ...todoList]);        
     }
 
     const EditTodo = () => {
@@ -47,7 +47,8 @@ const TodoModal = () => {
     return (
       <Rodal 
         closeOnEsc={true} 
-        animation='door' 
+        animation='door'
+        measure='' 
         onAnimationEnd={() => input.current.focus()} 
         visible={showModal} 
         onClose={onClose}
