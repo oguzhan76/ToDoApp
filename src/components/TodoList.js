@@ -18,7 +18,7 @@ const TodoList = () => {
 
     return (
       <div className="todo-list">
-        {filteredList && filteredList.map((i) => <TodoItem key={i.body} item={i} />)}
+        {filteredList && filteredList.map((i) => <TodoItem key={i.id} item={i} />)}
       </div>
     )
 }

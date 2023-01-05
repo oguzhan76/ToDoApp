@@ -14,6 +14,7 @@ $list:#E0E0E2;
 $modal: #404c74;
 // rgb(219, 219, 227); 232
 //rgb(238, 245, 117);
+$text: rgb(34, 34, 34);
 $darkBG: darken($background, 40%);
 $darkApp: darken($app, 40%);
 $darkList: darken($list, 20%);
@@ -28,4 +29,5 @@ $s-size: 1.2rem;
 $m-size: 1.6rem;
 $l-size: 3.2rem;
 $xl-size: 4.8rem;
-$desktop-breakpoint: 45rem;
+$desktop-bp: 80rem;
+$mobile-bp: 45rem;

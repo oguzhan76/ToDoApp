@@ -5,8 +5,9 @@ html {
 body {
     font-family:'Trebuchet MS', Arial, sans-serif;
     font-size: $m-size;
+    font-weight: 600;
     background-color: $darkBG;
-    color: rgb(34, 34, 34)
+    color: $text;
 }
 
 #root {

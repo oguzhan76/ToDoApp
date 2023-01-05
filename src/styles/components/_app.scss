@@ -8,9 +8,15 @@
     max-width: 50%;
 }
 
-
-@media (max-width: 80rem) {
+@media (max-width: $desktop-bp) {
     .app{
         max-width: 85%;
+    }
+}
+
+@media (max-width: $mobile-bp) {
+    .app {
+        max-width: 95%;
+        padding: 1.3rem;
     }
 }
