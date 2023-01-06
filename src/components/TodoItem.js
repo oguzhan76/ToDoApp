@@ -8,8 +8,8 @@ const TodoItem = ({ item }) => {
 
     const handleCheckboxChange = () => {
         setIsChecked((prev) => !prev);
-        item.complete = !ischecked; // ! becuase setischecked won't be effective until component rerenders
-        setTodoList(todoList.map((i) => i.body === item.body ? item : i ));
+        // ! becuase setischecked won't be effective until component rerenders
+        setTodoList(todoList.map((i) => i.id === item.id ? {...item, complete: !ischecked } : i ));
         // setTodoList([...todoList]);
     }
 

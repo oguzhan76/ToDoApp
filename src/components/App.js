@@ -1,27 +1,37 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useRef, useState} from "react";
 import AppContext from "../contexts/AppContext";
 import TodoModal from './TodoModal';
 import TodoList from './TodoList';
 import Header from "./Header";
 
 const App = () => {
-    const [ todoList, setTodoList ] = useState([]);
+    // Get data from local storage when mounted.
+    const loadList = () => {    
+        console.log('Data is gotten from local storage');
+        const data = JSON.parse(localStorage.getItem('todoList'));
+        return data || [];
+    }
+
+    const [ todoList, setTodoList ] = useState(loadList);
     const [ showModal, setShowModal ] = useState(false);
     const [ editItem, setEditItem ] = useState(null);
     const [ filter, setFilter ] = useState('all');
+    const [ searchFilter, setSearchFilter ] = useState('');
+    let initializing = useRef(true);
 
-    // Get data from local storage when mounted.
-    useEffect(() => {    
-      console.log('Data is gotten from local storage');
-      const data = JSON.parse(localStorage.getItem('todoList'));
-      setTodoList(data || []);
-    }, [])
+    console.log('Rendering app');
 
     //write to storage
     useEffect(() => {
-      localStorage.setItem('todoList', JSON.stringify(todoList));
+        // Using initializing state to prevent it to write when first mounted
+        if(todoList === undefined || initializing.current === true) {
+            initializing.current = false;
+            return;
+        }
+        console.log('writing to localStorage', todoList);
+        localStorage.setItem('todoList', JSON.stringify(todoList));
     }, [todoList]) 
-  
+
     return (
       <AppContext.Provider value={{ 
             showModal, 
@@ -31,7 +41,10 @@ const App = () => {
             todoList, 
             setTodoList, 
             filter, 
-            setFilter }}>
+            setFilter,
+            searchFilter,
+            setSearchFilter
+         }}>
         <div className="app">
           <Header />
           <TodoList />
