@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AppContext from "../contexts/AppContext";
-import TodoModal from './TodoModal';
+import CreateOrEditModal from './CreateOrEditModal';
 import TodoList from './TodoList';
 import Header from "./Header";
 
@@ -17,7 +17,7 @@ const App = () => {
     const [ editItem, setEditItem ] = useState(null);
     const [ filter, setFilter ] = useState('all');
     const [ searchFilter, setSearchFilter ] = useState('');
-    let initializing = useRef(true);
+    const initializing = useRef(true);
 
     console.log('Rendering app');
 
@@ -48,7 +48,7 @@ const App = () => {
         <div className="app">
           <Header />
           <TodoList />
-          <TodoModal />
+          <CreateOrEditModal />
         </div>
       </AppContext.Provider>
     )

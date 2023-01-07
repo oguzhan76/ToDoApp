@@ -3,17 +3,17 @@ import uniqid from 'uniqid';
 import AppContext from '../contexts/AppContext';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
-
 import timestamp from "time-stamp";
 
-const TodoModal = () => {
-    const input = useRef();
+
+const CreateOrEditModal = () => {
     const { showModal, 
             setShowModal, 
             todoList, 
             setTodoList, 
             editItem, 
             setEditItem } = useContext(AppContext);
+    const input = useRef();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -31,7 +31,7 @@ const TodoModal = () => {
             id,
             complete: false,
             body: input.current.value.trim(),
-            date: timestamp('MM/DD/YYYY HH:mm')
+            date: timestamp('MM/DD/YYYY  HH:mm')
         }
         setTodoList([newTodo, ...todoList]);        
     }
@@ -57,7 +57,7 @@ const TodoModal = () => {
         onClose={onClose}
       >
         <form className='modal-form' onSubmit={handleSubmit}>
-          <h2>Add a To Do:</h2>
+          <h2>{editItem ? 'Edit To Do:' : 'Add a To Do:'}</h2>
           <textarea className='modal-input' 
                     ref={input} 
                     autoFocus={true} 
@@ -73,4 +73,4 @@ const TodoModal = () => {
     )
   }
 
-  export default TodoModal;
+  export default CreateOrEditModal;
