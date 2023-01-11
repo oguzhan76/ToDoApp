@@ -5,6 +5,8 @@ import TodoList from './TodoList';
 import Header from "./Header";
 
 const App = () => {
+    // check if we have an access_token yet
+
     // Get data from local storage when mounted.
     const loadList = () => {    
         console.log('Data is gotten from local storage');

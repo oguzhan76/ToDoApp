@@ -1,18 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const LandingPage = () => {
-    const [response, setResponse ] = useState();
+const LandingPage = (props) => {
+    const navigate = useNavigate();
 
-    useEffect(() => { 
-        axios.get('/deneme').then(response => setResponse(response.data.success));
-    }, []);
+
+    axios.get('/access_token')
+        .then(response => {
+            if(response.headers.authorization) {
+                props.setAccessToken(response.headers.authorization);
+                navigate('/home');
+            }
+            else navigate('/login');
+        })
+        .catch(e => console.log('err', e.message));
     
     return (
-        <div style={{color: "white"}}>
-            <p>Landing Page </p>
-            <p>{response && response}</p>
+        <div>
         </div>
     )
 }
