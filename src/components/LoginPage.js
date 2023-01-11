@@ -1,8 +1,8 @@
-import React  from 'react';
+import React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+const LoginPage = (props) => {
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
@@ -12,23 +12,28 @@ const LoginPage = () => {
             username: e.target.username.value,
             password: e.target.password.value 
         })
-            .then(response => {
-                // if(response.data.token === 'buraya token gelcek')
-                //     navigate('/home');
-                console.log(response.headers);
-                console.log(response.headers.authorization);
-                // setResponse(response.data);
-            })
-            .catch(error => console.warn(error));
-        
-            e.target.reset();
+        .then(response => {
+            if(response.headers.authorization) {
+                props.setAccessToken(response.headers.authorization);
+                navigate('/app');
+            }
+            throw new Error('Login Failed!')
+        })
+        .catch(e => {
+            if(e.response)
+                console.error(e.response.data);
+            else
+                console.log(e.message);
+        });
+    
+        e.target.password.value = '';
     }
 
     return (    
         <form onSubmit={handleSubmit}>
             <input type="text" name="username" placeholder="username"></input>
             <input type="text" name="password" placeholder="password"></input>
-            <button type="submit">Submit</button>
+            <button type="submit">Login</button>
         </form>
     )
 }

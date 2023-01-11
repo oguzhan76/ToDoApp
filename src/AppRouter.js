@@ -14,7 +14,7 @@ const AppRouter = () => {
                 <Route path="/" element={ <LandingPage setAccessToken={setAccessToken} /> }/>
                 <Route path="/login" element={ <LoginPage setAccessToken={setAccessToken} /> }/>
                 <Route path="/signup" element={ <SignupPage setAccessToken={setAccessToken} /> }/>
-                <Route path='/home' element={<App accessToken={accessToken}/>} />
+                <Route path='/app' element={<App accessToken={accessToken}/>} />
             </Routes>
         </BrowserRouter>
     )    

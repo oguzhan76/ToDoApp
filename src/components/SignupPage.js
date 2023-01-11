@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const SignupPage = (props) => {
     const navigate = useNavigate();
-    const [success, setSuccess ] = useState(false);
+    const [ success, setSuccess ] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -20,9 +20,13 @@ const SignupPage = (props) => {
             props.setAccessToken(access_token);
             console.log(access_token);
         })
-        .catch(error => console.warn(error));
-        
-        e.target.reset();
+        .catch(e => {
+            if(e.response)
+                console.error(e.response.data);
+            else
+                console.log(e.message);
+        });
+        e.target.password.value = '';
     }
 
     const handleGetStarted = () => {

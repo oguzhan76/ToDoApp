@@ -5,12 +5,11 @@ import { useNavigate } from 'react-router-dom';
 const LandingPage = (props) => {
     const navigate = useNavigate();
 
-
     axios.get('/access_token')
         .then(response => {
             if(response.headers.authorization) {
                 props.setAccessToken(response.headers.authorization);
-                navigate('/home');
+                navigate('/app');
             }
             else navigate('/login');
         })

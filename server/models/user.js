@@ -59,8 +59,6 @@ userSchema.methods.generateAuthTokens = async function(callback) {
     this.access_token = access_token;
     this.refresh_token = refresh_token;
     await this.save();
-    return refresh_token;
-    // callback({ access_token, refresh_token });
 }
 
 
