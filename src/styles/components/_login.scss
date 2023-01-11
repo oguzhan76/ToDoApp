@@ -1,0 +1,47 @@
+.login-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24rem;
+    height: 20rem;
+    margin: -100px 0 0 -120px;
+    background-color: $darkApp;
+    padding: 2rem;
+    border-radius: 2rem;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+
+
+    input {
+        font-family: inherit;
+        font-size: 1.5rem;
+        height: 4rem;
+        border: none;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        text-indent: 0.3rem;
+    }
+
+    input:focus {
+        outline: none;
+    }
+    
+    .login-button {
+        background-color: $blue;
+    }
+    
+    .login-button:hover {
+        background-color: lighten($blue, 10%);
+    }
+    
+    .login-navlink {
+        color: $buttonText;
+        align-self: flex-end;
+    }
+    .login-navlink:hover {
+        font-size: 1.7rem;
+    }
+}

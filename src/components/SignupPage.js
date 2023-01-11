@@ -1,7 +1,7 @@
 import React  from 'react';
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const SignupPage = (props) => {
     const navigate = useNavigate();
@@ -42,11 +42,14 @@ const SignupPage = (props) => {
                 </div>
             )
                 : (  
-                    <form onSubmit={handleSubmit}>
-                    <input type="text" name="username" placeholder="username"></input>
-                    <input type="text" name="password" placeholder="password"></input>
-                    <button type="submit">Submit</button>
-                    </form>
+                    <div className='login-container'>
+                        <form className='login-form' onSubmit={handleSubmit}>
+                            <input autoComplete='off' type="text" name="username" placeholder="username"></input>
+                            <input autoComplete='off' type="text" name="password" placeholder="password"></input>
+                            <button className='login-button' type="submit">Signup</button>
+                            <NavLink className='login-navlink' to='/login'>Login</NavLink>
+                        </form>
+                    </div>
                 )
             }
         </div>
