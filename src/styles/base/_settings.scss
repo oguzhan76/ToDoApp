@@ -19,8 +19,8 @@ $text: rgb(34, 34, 34);
 $darkBG: darken($background, 40%);
 $darkApp: darken($app, 40%);
 $darkList: darken($list, 20%);
-$buttonBG: lighten($darkApp, 30%);
-$buttonBGHover: lighten($darkApp, 35%);
+$buttonBG: $blue;//lighten($darkApp, 30%);
+$buttonBGHover: lighten($buttonBG, 10%);//lighten($darkApp, 35%);
 $buttonText: antiquewhite;//rgb(117, 245, 200);
 $buttonTextHover: white;//darken($buttonText, 10%);
 

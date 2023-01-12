@@ -5,6 +5,10 @@
     justify-content: space-between;
 }
 
+.header-right-group {
+    display: flex;
+}
+
 .dropdown {
     background-color: $buttonBG;
     color: $buttonText;
@@ -15,6 +19,15 @@
     font-weight: bold;
     width: 13rem;
     height: 4rem;
+}
+
+.logout-button {
+    width: 4rem;
+    margin-left: 1rem;
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .search-bar {

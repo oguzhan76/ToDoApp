@@ -4,7 +4,7 @@ import CreateOrEditModal from './CreateOrEditModal';
 import TodoList from './TodoList';
 import Header from "./Header";
 
-const App = () => {
+const App = (props) => {
     // check if we have an access_token yet
 
     // Get data from local storage when mounted.
@@ -20,6 +20,7 @@ const App = () => {
     const [ filter, setFilter ] = useState('all');
     const [ searchFilter, setSearchFilter ] = useState('');
     const initializing = useRef(true);
+    const token = props.access_token;
 
     console.log('Rendering app');
 
@@ -35,24 +36,27 @@ const App = () => {
     }, [todoList]) 
 
     return (
-      <AppContext.Provider value={{ 
-            showModal, 
-            setShowModal, 
-            editItem,
-            setEditItem, 
-            todoList, 
-            setTodoList, 
-            filter, 
-            setFilter,
-            searchFilter,
-            setSearchFilter
-         }}>
-        <div className="app">
-          <Header />
-          <TodoList />
-          <CreateOrEditModal />
-        </div>
-      </AppContext.Provider>
+      <div className="homepage">
+        <AppContext.Provider value={{ 
+              showModal, 
+              setShowModal, 
+              editItem,
+              setEditItem, 
+              todoList, 
+              setTodoList, 
+              filter, 
+              setFilter,
+              searchFilter,
+              setSearchFilter,
+              token
+          }}>
+          <div className="app">
+            <Header />
+            <TodoList />
+            <CreateOrEditModal />
+          </div>
+        </AppContext.Provider>
+      </div>
     )
 }
 

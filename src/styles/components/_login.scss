@@ -30,14 +30,7 @@
         outline: none;
     }
     
-    .login-button {
-        background-color: $blue;
-    }
-    
-    .login-button:hover {
-        background-color: lighten($blue, 10%);
-    }
-    
+
     .login-navlink {
         color: $buttonText;
         align-self: flex-end;
@@ -46,6 +39,16 @@
         font-size: 1.7rem;
     }
 }
+
+.login-button {
+    background-color: $blue;
+}
+
+.login-button:hover {
+    background-color: lighten($blue, 10%);
+}
+
+
 .login-error-message {
     color: red;
     font-weight: 400;

@@ -31,7 +31,7 @@ const SignupPage = (props) => {
     }
 
     const handleGetStarted = () => {
-        navigate('/home')
+        navigate('/app')
     }
 
     return (    
