@@ -27,21 +27,27 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/signup', async (req, res) => {
-    const user = new User(req.body);
-    await user.generateAuthTokens();
-    res.setHeader('Authorization', 'Bearer '+ user.access_token)
+    try {
+        const user = new User(req.body);
+        await user.generateAuthTokens();
+        res.setHeader('Authorization', 'Bearer '+ user.access_token)
         .cookie('refresh_token', user.refresh_token, cookiesSettings)
         .send();
-
+    } catch (error) {
+        if(error.code === 11000)
+            res.status(400).send({error: 'Username not available'})
+        else
+            res.status(400).send({error: error.message});
+    }
 });
 
 // handshake
 router.get('/access_token', authByRefresh, async (req, res) => {
     if(!req.user)
-        return res.send();
+        return res.send(); 
     
     const user = req.user;
-    await req.user.generateAuthTokens();
+    await req.user.generateAuthTokens(); 
     res.setHeader('Authorization', 'Bearer ' + user.access_token)
         .cookie('refresh_token', user.refresh_token, cookiesSettings)
         .send();

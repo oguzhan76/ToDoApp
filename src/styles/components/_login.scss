@@ -3,7 +3,7 @@
     top: 50%;
     left: 50%;
     width: 24rem;
-    height: 20rem;
+    height: fit-content;
     margin: -100px 0 0 -120px;
     background-color: $darkApp;
     padding: 2rem;
@@ -13,6 +13,7 @@
 .login-form {
     display: flex;
     flex-direction: column;
+    flex: 100%;
 
 
     input {
@@ -44,4 +45,9 @@
     .login-navlink:hover {
         font-size: 1.7rem;
     }
+}
+.login-error-message {
+    color: red;
+    font-weight: 400;
+    margin: 0 0 1rem 0;
 }

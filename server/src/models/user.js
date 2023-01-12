@@ -7,13 +7,20 @@ const userSchema = new mongoose.Schema({
         type: String,
         unique: true,
         required: true,
-        trim: true
+        trim: true,
+        validate(value) {
+            if(value.length < 3)
+                throw new Error('Username must be 3 or more characters');
+        }
     },
     password: {
         type: String,
         required: true,
         trim: true,
-        //validate
+        validate(value) {
+            if(value.length < 6)
+                throw new Error('Password must be 6 or more characters')
+        }
     },
     access_token: {
         type: String,

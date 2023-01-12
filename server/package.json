@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon server.js",
-    "dev-server": "env-cmd -f ./config/dev.env nodemon server.js"
+    "server": "nodemon src/server.js",
+    "dev-server": "env-cmd -f ./config/dev.env nodemon src/server.js"
   },
   "author": "",
   "license": "ISC",

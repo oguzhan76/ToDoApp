@@ -6,6 +6,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 const SignupPage = (props) => {
     const navigate = useNavigate();
     const [ success, setSuccess ] = useState(false);
+    const [ error, setError ] = useState();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -21,10 +22,10 @@ const SignupPage = (props) => {
             console.log(access_token);
         })
         .catch(e => {
-            if(e.response)
-                console.error(e.response.data);
+            if (e.response.status === 500)                
+                setError('Server not responding.');
             else
-                console.log(e.message);
+                setError(e.response ? e.response.data.error : e.message);
         });
         e.target.password.value = '';
     }
@@ -44,6 +45,7 @@ const SignupPage = (props) => {
                 : (  
                     <div className='login-container'>
                         <form className='login-form' onSubmit={handleSubmit}>
+                            {error && <p className='login-error-message'>{error}</p>}
                             <input autoComplete='off' type="text" name="username" placeholder="username"></input>
                             <input autoComplete='off' type="text" name="password" placeholder="password"></input>
                             <button className='login-button' type="submit">Signup</button>

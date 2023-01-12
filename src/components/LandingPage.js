@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const LandingPage = (props) => {
     const navigate = useNavigate();
+    const [ error, setError ] = useState();
 
     axios.get('/access_token')
         .then(response => {
@@ -13,10 +14,16 @@ const LandingPage = (props) => {
             }
             else navigate('/login');
         })
-        .catch(e => console.log('err', e.message));
+        .catch(e => {
+            if (e.response.status === 500)                
+                setError('Server is not responding.');
+            else
+                setError(e.message);
+        })
     
     return (
         <div>
+        {error && <p className='login-error-message'>{error}</p>}
         </div>
     )
 }
