@@ -49,6 +49,7 @@ const CreateOrEditModal = () => {
 
     return (
       <Rodal 
+        className='create-edit-modal'
         closeOnEsc={true} 
         animation='door'
         measure='' 

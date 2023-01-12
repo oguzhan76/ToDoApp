@@ -1,0 +1,21 @@
+.logout-dialog {
+    .rodal-dialog {
+        background-color: $darkApp;
+        border: none;
+        border-radius: 1rem;
+        width: 25rem;
+        height: 15rem;
+    }
+
+    p {
+        font-size: 2rem;
+        color: antiquewhite;
+        margin: 2rem auto;
+        text-align: center;
+    }
+}   
+
+.logout-dialog__buttons {
+    display: flex;
+    justify-content:space-between;
+}
