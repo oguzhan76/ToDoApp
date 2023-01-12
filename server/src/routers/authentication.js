@@ -12,6 +12,18 @@ const cookiesSettings = {
     secure: false
 }
 
+// handshake
+router.get('/access_token', authByRefresh, async (req, res) => {
+    if(!req.user)
+        return res.send(); 
+    
+    const user = req.user;
+    await req.user.generateAuthTokens(); 
+    res.setHeader('Authorization', 'Bearer ' + user.access_token)
+        .cookie('refresh_token', user.refresh_token, cookiesSettings)
+        .send();
+});
+
 router.post('/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.username, req.body.password);
@@ -41,17 +53,15 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-// handshake
-router.get('/access_token', authByRefresh, async (req, res) => {
-    if(!req.user)
-        return res.send(); 
-    
+router.get('/logout', authByAccess, async (req, res) => {
     const user = req.user;
-    await req.user.generateAuthTokens(); 
-    res.setHeader('Authorization', 'Bearer ' + user.access_token)
-        .cookie('refresh_token', user.refresh_token, cookiesSettings)
-        .send();
+    user.access_token = '';
+    user.refresh_token = '';
+    await user.save();
+    res.status(200).clearCookie('refresh_token').send({ logout: true});
 });
+
+
 
 
 module.exports = router;

@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import AppContext from "../contexts/AppContext";
 import {FiLogOut} from 'react-icons/fi';
 import Rodal from 'rodal';
@@ -6,6 +7,7 @@ import 'rodal/lib/rodal.css';
 import axios from "axios";
 
 const Header = () => {
+    const navigate = useNavigate();
     const { token, setShowModal, setFilter, setSearchFilter } = useContext(AppContext);
     const [ showDialog, setShowDialog ] = useState(false);
 
@@ -15,11 +17,13 @@ const Header = () => {
     }
 
     const handleLogout = () => {
-        axios({
-            method: 'get',
-            url: '/logout',
-            headers: { Authorization: token }
+        console.log('logging out with ',token);
+        axios.get('/logout', { headers: { Authorization: token } })
+        .then(response => {
+            if(response.data.logout)
+                navigate('/login');
         })
+        .catch(e => console.log(e.message));
     }
 
     return (

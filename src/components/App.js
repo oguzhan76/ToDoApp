@@ -20,7 +20,7 @@ const App = (props) => {
     const [ filter, setFilter ] = useState('all');
     const [ searchFilter, setSearchFilter ] = useState('');
     const initializing = useRef(true);
-    const token = props.access_token;
+    const token = props.accessToken;
 
     console.log('Rendering app');
 

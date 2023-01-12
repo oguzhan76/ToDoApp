@@ -7,7 +7,7 @@ import SignupPage from './components/SignupPage';
 
 const AppRouter = () => {
     const [accessToken, setAccessToken ] = useState();
-
+    
     return (
         <BrowserRouter>
             <Routes>

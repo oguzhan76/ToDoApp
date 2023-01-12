@@ -23,12 +23,10 @@ const userSchema = new mongoose.Schema({
         }
     },
     access_token: {
-        type: String,
-        required: true
+        type: String
     },
     refresh_token: {
-        type: String,
-        required: true
+        type: String
     }
 });
 
