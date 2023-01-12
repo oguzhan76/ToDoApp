@@ -30,16 +30,12 @@ const SignupPage = (props) => {
         e.target.password.value = '';
     }
 
-    const handleGetStarted = () => {
-        navigate('/app')
-    }
-
     return (    
-        <div>
+        <div className='login-container'>
             {success ? (
-                <div>
-                <h1 className='success'>Success</h1>
-                <button onClick={handleGetStarted}>Get Started</button>
+                <div className='signup-success'>
+                    <h1 className='signup-success__header'>Success!</h1>
+                    <button className='signup-success__button' onClick={() => navigate('/')}>Get Started</button>
                 </div>
             )
                 : (  

@@ -54,3 +54,17 @@
     font-weight: 400;
     margin: 0 0 1rem 0;
 }
+
+.signup-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .signup-success__header {
+        color:rgb(0, 255, 132);
+    }
+
+    .signup-success__button {
+        width: 13rem;
+    }
+}

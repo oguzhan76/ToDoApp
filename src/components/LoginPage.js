@@ -16,7 +16,7 @@ const LoginPage = (props) => {
         .then(response => {
             if(response.headers.authorization) {
                 props.setAccessToken(response.headers.authorization);
-                navigate('/app');
+                navigate('/');
             }
             else throw new Error('Login Failed!')
         })
