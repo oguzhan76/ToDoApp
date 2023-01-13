@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, { useRef, useEffect }  from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -7,6 +7,11 @@ const SignupPage = (props) => {
     const navigate = useNavigate();
     const [ success, setSuccess ] = useState(false);
     const [ error, setError ] = useState();
+    const userRef = useRef();
+
+    useEffect(() => {
+        userRef.current.focus();
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -42,8 +47,23 @@ const SignupPage = (props) => {
                     <div className='login-container'>
                         <form className='login-form' onSubmit={handleSubmit}>
                             {error && <p className='login-error-message'>{error}</p>}
-                            <input autoComplete='off' type="text" name="username" placeholder="username"></input>
-                            <input autoComplete='off' type="text" name="password" placeholder="password"></input>
+                            <input 
+                                ref={userRef} 
+                                autoComplete='off' 
+                                type="text" 
+                                name="username" 
+                                placeholder="username"
+                                required
+                            >
+                            </input>
+                            <input 
+                                autoComplete='off' 
+                                type="text" 
+                                name="password" 
+                                placeholder="password"
+                                required    
+                            >
+                            </input>
                             <button className='login-button' type="submit">Signup</button>
                             <NavLink className='login-navlink' to='/login'>Login</NavLink>
                         </form>

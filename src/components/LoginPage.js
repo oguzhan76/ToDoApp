@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, NavLink } from 'react-router-dom';
 
 const LoginPage = (props) => {
     const navigate = useNavigate();
+    const userRef = useRef();
     const [ error, setError ] = useState();
+
+    useEffect(() => {
+        userRef.current.focus();
+    }, []);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -21,7 +27,7 @@ const LoginPage = (props) => {
             else throw new Error('Login Failed!')
         })
         .catch(e => {
-            if (e.response.status === 500)                
+            if (!e.response)                
                 setError('Server is not responding.');
             else
                 setError(e.response.data ? e.response.data.error : e.message);
@@ -34,7 +40,7 @@ const LoginPage = (props) => {
         <div className='login-container'>
             <form className='login-form' onSubmit={handleSubmit}>
                 {error && <p className='login-error-message'>{error}</p>}
-                <input type="text" name="username" placeholder="username"></input>
+                <input ref={userRef} type="text" name="username" placeholder="username"></input>
                 <input autoComplete='off' type="text" name="password" placeholder="password"></input>
                 <button className='login-button' type="submit">Login</button>
                 <NavLink className='login-navlink' to='/signup'>Sign up</NavLink>
