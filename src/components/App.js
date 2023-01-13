@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../contexts/AppContext";
 import CreateOrEditModal from './CreateOrEditModal';
@@ -9,40 +9,37 @@ import axios from "axios";
 const App = (props) => {
     // check if we have an access_token yet
 
-    // Get data from local storage when mounted.
-    const loadList = () => {    
-        console.log('Data is gotten from local storage');
-        const data = JSON.parse(localStorage.getItem('todoList'));
-        return data || [];
-    }
-    const token = props.accessToken;
+    const { todoList, setTodoList, token, setToken } = useContext(AppContext);
     const navigate = useNavigate();
     const [ error, setError ] = useState();
-
-    const [ todoList, setTodoList ] = useState(loadList);
-    const [ showModal, setShowModal ] = useState(false);
-    const [ editItem, setEditItem ] = useState(null);
-    const [ filter, setFilter ] = useState('all');
-    const [ searchFilter, setSearchFilter ] = useState('');
     const initializing = useRef(true);
 
-
-    if(!token) {
-        axios.get('/access_token')
-        .then(response => {
-            if(response.headers.authorization) {
-                props.setAccessToken(response.headers.authorization);
-            }
-            else navigate('/login');
-        })
-        .catch(e => {
-            if (e.response.status === 500)                
-                setError('Server is not responding.');
-            else
-                setError(e.message);
-        })
-    }
-
+    useEffect(() => {
+        // Get data from local storage when mounted.
+        console.log('Data is gotten from local storage');
+        const data = JSON.parse(localStorage.getItem('todoList'));
+        setTodoList(data || []);
+        
+        // Request access token if there isn't any
+        if(!token) {
+            
+            axios.get('/access_token')
+            .then(response => {
+                if(response.headers.authorization) {
+                    setToken(response.headers.authorization);
+                    console.log('Got new access token')
+                }
+                else navigate('/login');
+            })
+            .catch(e => {
+                if (e.response.status === 500)                
+                    setError('Server is not responding.');
+                else
+                    setError(e.message);
+            });
+        }
+    }, []);
+    
     //write to storage
     useEffect(() => {
         // Using initializing state to prevent it to write when first mounted
@@ -57,25 +54,11 @@ const App = (props) => {
     return (
         !token ? error && <p className='login-error-message'>{error}</p> :
         <div className="homepage">
-                <AppContext.Provider value={{ 
-                    showModal, 
-                    setShowModal, 
-                    editItem,
-                    setEditItem, 
-                    todoList, 
-                    setTodoList, 
-                    filter, 
-                    setFilter,
-                    searchFilter,
-                    setSearchFilter,
-                    token
-                }}>
-                    <div className="app">
-                        <Header />
-                        <TodoList />
-                        <CreateOrEditModal />
-                    </div>
-                </AppContext.Provider>
+            <div className="app">
+                <Header />
+                <TodoList />
+                <CreateOrEditModal />
+            </div>
         </div>
     )
 }

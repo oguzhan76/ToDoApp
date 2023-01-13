@@ -17,7 +17,6 @@ const Header = () => {
     }
 
     const handleLogout = () => {
-        console.log('logging out with ',token);
         axios.get('/logout', { headers: { Authorization: token } })
         .then(response => {
             if(response.data.logout)

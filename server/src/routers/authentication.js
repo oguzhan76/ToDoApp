@@ -1,6 +1,5 @@
 const express = require('express');
 const User = require('../models/user');
-const jwt = require('jsonwebtoken');
 const { authByRefresh, authByAccess }  = require('../middleware/auth');
 
 const router = new express.Router();
@@ -16,7 +15,7 @@ const cookiesSettings = {
 router.get('/access_token', authByRefresh, async (req, res) => {
     if(!req.user)
         return res.send(); 
-    
+        
     const user = req.user;
     await req.user.generateAuthTokens(); 
     res.setHeader('Authorization', 'Bearer ' + user.access_token)

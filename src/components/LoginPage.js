@@ -1,8 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate, NavLink } from 'react-router-dom';
+import AppContext from '../contexts/AppContext';
 
 const LoginPage = (props) => {
+    const { setToken } = useContext(AppContext);
     const navigate = useNavigate();
     const userRef = useRef();
     const [ error, setError ] = useState();
@@ -21,7 +23,7 @@ const LoginPage = (props) => {
         })
         .then(response => {
             if(response.headers.authorization) {
-                props.setAccessToken(response.headers.authorization);
+                setToken(response.headers.authorization);
                 navigate('/');
             }
             else throw new Error('Login Failed!')

@@ -1,9 +1,11 @@
-import React, { useRef, useEffect }  from 'react';
+import React, { useRef, useEffect, useContext }  from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import AppContext from '../contexts/AppContext';
 
 const SignupPage = (props) => {
+    const { setToken } = useContext(AppContext);
     const navigate = useNavigate();
     const [ success, setSuccess ] = useState(false);
     const [ error, setError ] = useState();
@@ -23,8 +25,7 @@ const SignupPage = (props) => {
         .then(response => {
             setSuccess(true);
             const access_token = response.headers.authorization.replace('Bearer ', '');
-            props.setAccessToken(access_token);
-            console.log(access_token);
+            setToken(access_token);
         })
         .catch(e => {
             if (e.response.status === 500)                
@@ -39,7 +40,7 @@ const SignupPage = (props) => {
         <div className='login-container'>
             {success ? (
                 <div className='signup-success'>
-                    <h1 className='signup-success__header'>Success!</h1>
+                    <h1 className='signup-success__header'>Welcome!</h1>
                     <button className='signup-success__button' onClick={() => navigate('/')}>Get Started</button>
                 </div>
             )
