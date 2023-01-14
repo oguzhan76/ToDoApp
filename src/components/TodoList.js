@@ -6,6 +6,8 @@ const TodoList = () => {
     const { filter, todoList, searchFilter } = useContext(AppContext);
 
     const filteredList = useMemo(() => {
+        if (!todoList) return [];
+
         const checkSearch = (item) => item.body.toLowerCase().includes(searchFilter.toLowerCase());
 
         if (filter === 'all') 

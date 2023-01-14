@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate, NavLink } from 'react-router-dom';
 import AppContext from '../contexts/AppContext';
 
-const LoginPage = (props) => {
+const LoginPage = () => {
     const { setToken } = useContext(AppContext);
     const navigate = useNavigate();
     const userRef = useRef();

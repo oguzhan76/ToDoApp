@@ -1,9 +1,8 @@
 import React, { useContext, useRef } from 'react';
-import uniqid from 'uniqid';
 import AppContext from '../contexts/AppContext';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
-import timestamp from "time-stamp";
+import axios from 'axios';
 
 
 const CreateOrEditModal = () => {
@@ -12,7 +11,8 @@ const CreateOrEditModal = () => {
             todoList, 
             setTodoList, 
             editItem, 
-            setEditItem } = useContext(AppContext);
+            setEditItem,
+            token } = useContext(AppContext);
     const input = useRef();
 
     const handleSubmit = (e) => {
@@ -26,14 +26,28 @@ const CreateOrEditModal = () => {
     }
 
     const CreateTodo = () => {
-        const id = uniqid.time();
-        const newTodo = { 
-            id,
-            complete: false,
-            body: input.current.value.trim(),
-            date: timestamp('MM/DD/YYYY  HH:mm')
-        }
-        setTodoList([newTodo, ...todoList]);        
+        axios({
+            method: 'post',
+            url: '/newtodo', 
+            data: { 
+                completed: false,
+                text: input.current.value.trim(),
+                // date: timestamp('MM/DD/YYYY  HH:mm')
+            }, 
+            headers: { Authorization: token }
+        })
+        .then(response => {
+            console.log('new todo response: ', response.data);            
+            const newTodo = {
+                id: response.data._id,
+                complete: response.data.completed,
+                body: response.data.text,
+                date: new Date(parseInt(response.data.createdAt)).toLocaleString()
+            };
+            console.log('yeni todomuz:', newTodo);
+            setTodoList([newTodo, ...todoList]);
+        })
+        .catch(e => console.log(e.response));
     }
 
     const EditTodo = () => {

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import AppContext from '../contexts/AppContext';
 
-const SignupPage = (props) => {
+const SignupPage = () => {
     const { setToken } = useContext(AppContext);
     const navigate = useNavigate();
     const [ success, setSuccess ] = useState(false);

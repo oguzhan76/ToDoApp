@@ -30,6 +30,12 @@ const userSchema = new mongoose.Schema({
     }
 });
 
+// userSchema.virtual('todos', {
+//     ref: 'Todo',
+//     localField: '_id',
+//     foreignField: 'owner'
+// })
+
 userSchema.pre('save', async function(next) {
     const user = this;
 
@@ -58,13 +64,15 @@ userSchema.statics.findByToken = async (token) => {
     return user;
 }
 
-userSchema.methods.generateAuthTokens = async function(callback) {
+userSchema.methods.generateAuthTokens = async function() {
     const access_token = await jwt.sign({ _id: this._id.toString() }, process.env.JWT_ACCESS_SECRET);
     const refresh_token = await jwt.sign({ _id: this._id.toString() }, process.env.JWT_REFRESH_SECRET);
     this.access_token = access_token;
     this.refresh_token = refresh_token;
     await this.save();
 }
+
+// delete todos when the user is removed
 
 
 const User = mongoose.model('User', userSchema);

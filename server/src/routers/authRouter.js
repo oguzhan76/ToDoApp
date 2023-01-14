@@ -15,12 +15,15 @@ const cookiesSettings = {
 router.get('/access_token', authByRefresh, async (req, res) => {
     if(!req.user)
         return res.send(); 
-        
-    const user = req.user;
-    await req.user.generateAuthTokens(); 
-    res.setHeader('Authorization', 'Bearer ' + user.access_token)
-        .cookie('refresh_token', user.refresh_token, cookiesSettings)
-        .send();
+    try {
+        const user = req.user;
+        await user.generateAuthTokens(); 
+        res.setHeader('Authorization', 'Bearer ' + user.access_token)
+            .cookie('refresh_token', user.refresh_token, cookiesSettings)
+            .send();
+    } catch (e) {
+        res.status(400).send({error: e.message});
+    }
 });
 
 router.post('/login', async (req, res) => {
@@ -33,7 +36,7 @@ router.post('/login', async (req, res) => {
     }
     catch (e){
         console.log('sending error');
-        return res.status(400).send({error: e.message});
+        res.status(400).send({error: e.message});
     }    
 });
 
@@ -59,8 +62,5 @@ router.get('/logout', authByAccess, async (req, res) => {
     await user.save();
     res.status(200).clearCookie('refresh_token').send({ logout: true});
 });
-
-
-
 
 module.exports = router;

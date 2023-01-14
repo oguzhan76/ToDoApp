@@ -3,7 +3,8 @@ const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
-const authRouter = require('./routers/authentication');
+const authRouter = require('./routers/authRouter');
+const apiRouter = require('./routers/apiRouter');
 
 mongoose.set('strictQuery', false);
 mongoose.connect(process.env.MONGODB_URL);
@@ -23,6 +24,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(buildPath));
 app.use(authRouter);
+app.use(apiRouter);
 
 
 app.get("*", (req, res) => {
