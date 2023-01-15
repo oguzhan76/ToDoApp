@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const formatDate = require('../utils/formatDate');
 
 const todoSchema = new mongoose.Schema({
     completed: {
@@ -20,6 +21,15 @@ const todoSchema = new mongoose.Schema({
         ref: 'User'
     }
 })
+
+todoSchema.methods.ReadyForClient = function() {
+    return {
+        _id: this._id,
+        completed: this.completed,
+        text: this.text,
+        date: formatDate(this.createdAt)
+    }
+}
 
 const Todo = mongoose.model('Todo', todoSchema);
 

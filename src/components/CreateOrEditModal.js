@@ -44,9 +44,26 @@ const CreateOrEditModal = () => {
     }
 
     const EditTodo = () => {
-        const newItem = {...editItem, body: input.current.value.trim()};
-        setTodoList(todoList.map(item => item.id === editItem.id ? newItem : item));
-        setEditItem(null);
+        axios({ 
+            method: 'patch', 
+            url: `/edit/${editItem._id}`, 
+            data: { text: input.current.value.trim() }, 
+            headers: { Authorization: token }
+        })
+        .then(response => {
+            if(response.status === 200) {
+                console.log('buraya mi giriyorsun');
+                console.log(response.data);
+                setTodoList(todoList.map(item => item._id === editItem._id ? response.data : item));
+                setEditItem(null);
+            }
+        })
+        .catch(e => {
+            console.log(e);
+            console.log(e.response.data.error);
+            console.log(todoList);
+        });
+
     }
 
     const onClose = () => {
@@ -70,7 +87,7 @@ const CreateOrEditModal = () => {
                     ref={input} 
                     autoFocus={true} 
                     name='input' 
-                    defaultValue={editItem ? editItem.body : ''} 
+                    defaultValue={editItem ? editItem.text : ''} 
                     required>
           </textarea>
           <div className='modal-button-container '>
