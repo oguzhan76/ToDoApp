@@ -26,6 +26,7 @@ router.patch('/edit/:id', authByAccess, async(req, res) => {
     console.log('requested a patch ', req.body);
     try {
         const todo = await Todo.findByIdAndUpdate(req.params.id, req.body, { new: true});
+        // throw new Error('bu error mesaji');
         res.status(200).send(todo.ReadyForClient());
     } catch (e) {
         res.status(500).send({ error: e.message });

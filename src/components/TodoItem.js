@@ -1,15 +1,22 @@
 import React, { useState, useContext } from "react";
 import { ImPencil, ImBin2 } from 'react-icons/im';
 import AppContext from "../contexts/AppContext";
+import useApiRequest from "../hooks/useApiRequest";
 
 const TodoItem = ({ item }) => {
     const { todoList, setTodoList, setShowModal, setEditItem } = useContext(AppContext);
     const [ischecked, setIsChecked ] = useState(item.completed);
+    const editTodo = useApiRequest();
 
     const handleCheckboxChange = () => {
-        setIsChecked((prev) => !prev);
+        // setIsChecked((prev) => !prev);
+        setEditItem(item); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         // !isChecked -> becuase setischecked won't be effective until component rerenders
-        setTodoList(todoList.map((i) => i._id === item._id ? {...item, completed: !ischecked } : i ));
+        // setTodoList(todoList.map((i) => i._id === item._id ? {...item, completed: !ischecked } : i ));
+        editTodo({toggle: true}, (error) => {
+            if(error)
+                console.log(error);
+        })
     }
 
     const handleEdit = () => {

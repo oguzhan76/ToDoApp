@@ -3,6 +3,7 @@ import AppContext from '../contexts/AppContext';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
 import axios from 'axios';
+import useApiRequest from '../hooks/useApiRequest';
 
 
 const CreateOrEditModal = () => {
@@ -17,7 +18,7 @@ const CreateOrEditModal = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-            if(editItem)
+            if(editItem) 
                 EditTodo();
             else
                 CreateTodo();
@@ -25,14 +26,14 @@ const CreateOrEditModal = () => {
         setShowModal(false);
     }
 
+    const editTodo = useApiRequest();
+
     const CreateTodo = () => {
         axios({
             method: 'post',
             url: '/newtodo', 
             data: { 
-                completed: false,
-                text: input.current.value.trim(),
-                // date: timestamp('MM/DD/YYYY  HH:mm')
+                text: input.current.value.trim()
             }, 
             headers: { Authorization: token }
         })
@@ -43,26 +44,36 @@ const CreateOrEditModal = () => {
         .catch(e => console.log(e.response));
     }
 
-    const EditTodo = () => {
-        axios({ 
-            method: 'patch', 
-            url: `/edit/${editItem._id}`, 
-            data: { text: input.current.value.trim() }, 
-            headers: { Authorization: token }
-        })
-        .then(response => {
-            if(response.status === 200) {
-                console.log('buraya mi giriyorsun');
-                console.log(response.data);
-                setTodoList(todoList.map(item => item._id === editItem._id ? response.data : item));
+    const EditTodo = () => {    
+        editTodo({text: input.current.value.trim(), toggle: false}, (error) => {
+            if(!error)
                 setEditItem(null);
-            }
-        })
-        .catch(e => {
-            console.log(e);
-            console.log(e.response.data.error);
-            console.log(todoList);
+            else
+                console.log(error);
         });
+
+        // axios({ 
+        //     method: 'patch', 
+        //     url: `/edit/${editItem._id}`, 
+        //     data: { text: input.current.value.trim() }, 
+        //     headers: { Authorization: token }
+        // })
+        // .then(response => {
+        //     if(response.status === 200) {
+        //         console.log('buraya mi giriyorsun');
+        //         console.log(response.data);
+        //         setTodoList(todoList.map(item => item._id === editItem._id ? response.data : item));
+        //         getList();
+        //         setEditItem(null); // kalacak
+        //     }
+        // })
+        // .catch(e => {
+        //     if(e.response.data)
+        //         console.log(e.response.data.error);
+        //     else
+        //         console.log(e.response.statusText);
+        //     // console.log(todoList);
+        // });
 
     }
 

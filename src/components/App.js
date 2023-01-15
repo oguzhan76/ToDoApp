@@ -7,7 +7,7 @@ import Header from "./Header";
 import axios from "axios";
 
 const App = () => {
-    const { todoList, setTodoList, token, setToken } = useContext(AppContext);
+    const { setTodoList, token, setToken } = useContext(AppContext);
     // console.log('app rendered', todoList);
     const navigate = useNavigate();
     const [ error, setError ] = useState();
@@ -33,28 +33,6 @@ const App = () => {
         }
 
         fetchData();
-        // Request access token if there isn't any
-        // if(!token) {
-        //     axios.get('/access_token')
-        //     .then(response => {
-        //         if(response.headers.authorization) {
-        //             setToken(response.headers.authorization);
-        //             console.log('Got new access token');
-                    
-        //             console.log('Error sonrasi');
-        //             console.log('request todolist from server');
-        //             // get the list from server
-        //             setTodoList([]);
-        //         }
-        //         else navigate('/login');
-        //     })
-        //     .catch(e => {
-        //         if (e.response.status === 500)                
-        //             setError('Server is not responding.');
-        //         else
-        //             setError(e.message);
-        //     });
-        // }
     }, []);
 
     return (
