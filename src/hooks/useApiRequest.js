@@ -3,9 +3,9 @@ import axios from "axios";
 import AppContext from "../contexts/AppContext";
 
 export default function useApiRequest() {
-    const { token, editItem, todoList, setTodoList } = useContext(AppContext);
+    const { token, todoList, setTodoList } = useContext(AppContext);
 
-    const editTodo = async ({ text, toggle }, callback) => {
+    const editTodo = async (editItem, { text, toggle }, callback) => {
         try {
             const response = await axios({ 
                 method: 'patch', 

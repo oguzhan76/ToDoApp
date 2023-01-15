@@ -9,6 +9,14 @@
     justify-content: space-between;
 }
 
+.list-row.completed {
+    background-color: darken($darkList, 30%);
+
+    .list-row-item-date { 
+        color: darken($textDates, 20%);
+    }
+}
+
 .list-row-item {
     display: flex;
     flex-direction: row;
@@ -25,7 +33,7 @@
     .list-row-item-date {
         padding: 0.5rem 0 0 1rem;
         font-size: $s-size;
-        color: rgb(96, 96, 96);
+        color: $textDates;
     }
 
     button {

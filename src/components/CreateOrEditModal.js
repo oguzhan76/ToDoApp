@@ -45,7 +45,7 @@ const CreateOrEditModal = () => {
     }
 
     const EditTodo = () => {    
-        editTodo({text: input.current.value.trim(), toggle: false}, (error) => {
+        editTodo(editItem, {text: input.current.value.trim(), toggle: false}, (error) => {
             if(!error)
                 setEditItem(null);
             else

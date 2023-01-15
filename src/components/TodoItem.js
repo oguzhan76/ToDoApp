@@ -1,19 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { ImPencil, ImBin2 } from 'react-icons/im';
 import AppContext from "../contexts/AppContext";
 import useApiRequest from "../hooks/useApiRequest";
 
 const TodoItem = ({ item }) => {
     const { todoList, setTodoList, setShowModal, setEditItem } = useContext(AppContext);
-    const [ischecked, setIsChecked ] = useState(item.completed);
     const editTodo = useApiRequest();
 
     const handleCheckboxChange = () => {
-        // setIsChecked((prev) => !prev);
-        setEditItem(item); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        // !isChecked -> becuase setischecked won't be effective until component rerenders
-        // setTodoList(todoList.map((i) => i._id === item._id ? {...item, completed: !ischecked } : i ));
-        editTodo({toggle: true}, (error) => {
+        editTodo(item, {toggle: true}, (error) => {
             if(error)
                 console.log(error);
         })
@@ -29,9 +24,9 @@ const TodoItem = ({ item }) => {
     }
 
     return (
-        <div className="list-row">
+        <div className={`list-row ${item.completed ? "completed" : ""}`}>
             <div className="list-row-item">
-                <input className="checkbox" type="checkbox" checked={ischecked} onChange={handleCheckboxChange}></input>
+                <input className="checkbox" type="checkbox" checked={item.completed} onChange={handleCheckboxChange}></input>
                 <div>
                     <p style={{textDecoration: item.completed ? 'line-through 0.3rem' : 'none' }}>{item.text}</p>
                     <p className="list-row-item-date">{item.date}</p>
