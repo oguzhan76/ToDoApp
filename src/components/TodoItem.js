@@ -4,12 +4,12 @@ import AppContext from "../contexts/AppContext";
 
 const TodoItem = ({ item }) => {
     const { todoList, setTodoList, setShowModal, setEditItem } = useContext(AppContext);
-    const [ischecked, setIsChecked ] = useState(item.complete);
+    const [ischecked, setIsChecked ] = useState(item.completed);
 
     const handleCheckboxChange = () => {
         setIsChecked((prev) => !prev);
-        // ! becuase setischecked won't be effective until component rerenders
-        setTodoList(todoList.map((i) => i.id === item.id ? {...item, complete: !ischecked } : i ));
+        // !isChecked -> becuase setischecked won't be effective until component rerenders
+        setTodoList(todoList.map((i) => i._id === item._id ? {...item, completed: !ischecked } : i ));
     }
 
     const handleEdit = () => {
@@ -18,7 +18,7 @@ const TodoItem = ({ item }) => {
     }
 
     const handleDelete = () => {
-        setTodoList(todoList.filter(todo => item.id !== todo.id));
+        setTodoList(todoList.filter(todo => item._id !== todo._id));
     }
 
     return (
@@ -26,9 +26,7 @@ const TodoItem = ({ item }) => {
             <div className="list-row-item">
                 <input className="checkbox" type="checkbox" checked={ischecked} onChange={handleCheckboxChange}></input>
                 <div>
-                    <p style={{textDecoration: item.complete ? 'line-through 0.3rem' : 'none' 
-                                }}>{item.body}
-                    </p>
+                    <p style={{textDecoration: item.completed ? 'line-through 0.3rem' : 'none' }}>{item.text}</p>
                     <p className="list-row-item-date">{item.date}</p>
                 </div>
             </div>

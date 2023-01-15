@@ -5,7 +5,7 @@ const AppContext = createContext({});
 export const AppProvider = ({children}) => {
     const [ showModal, setShowModal ] = useState(false);
     const [ editItem, setEditItem ] = useState(null);
-    const [ todoList, setTodoList ] = useState();
+    const [ todoList, setTodoList ] = useState([]);
     const [ filter, setFilter ] = useState('all');
     const [ searchFilter, setSearchFilter ] = useState('');
     const [ token, setToken ] = useState();

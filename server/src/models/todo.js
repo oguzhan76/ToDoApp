@@ -12,13 +12,13 @@ const todoSchema = new mongoose.Schema({
     },
     createdAt: {
         type: String,
-        default: Date.now(),
+        default: Date.now,
     },
-    // owner: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     required: true,
-    //     ref: 'User'
-    // }
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    }
 })
 
 const Todo = mongoose.model('Todo', todoSchema);

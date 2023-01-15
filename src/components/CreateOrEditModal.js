@@ -37,15 +37,8 @@ const CreateOrEditModal = () => {
             headers: { Authorization: token }
         })
         .then(response => {
-            console.log('new todo response: ', response.data);            
-            const newTodo = {
-                id: response.data._id,
-                complete: response.data.completed,
-                body: response.data.text,
-                date: new Date(parseInt(response.data.createdAt)).toLocaleString()
-            };
-            console.log('yeni todomuz:', newTodo);
-            setTodoList([newTodo, ...todoList]);
+            console.log('new todo response: ', response.data); 
+            setTodoList([response.data, ...todoList]);
         })
         .catch(e => console.log(e.response));
     }
