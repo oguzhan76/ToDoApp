@@ -9,11 +9,9 @@ import useApiRequest from '../hooks/useApiRequest';
 const CreateOrEditModal = () => {
     const { showModal, 
             setShowModal, 
-            todoList, 
-            setTodoList, 
             editItem, 
             setEditItem,
-            token } = useContext(AppContext);
+            setError } = useContext(AppContext);
     const input = useRef();
 
     const handleSubmit = (e) => {
@@ -26,55 +24,16 @@ const CreateOrEditModal = () => {
         setShowModal(false);
     }
 
-    const editTodo = useApiRequest();
+    const {requestEdit, requestNew } = useApiRequest();
 
     const CreateTodo = () => {
-        axios({
-            method: 'post',
-            url: '/newtodo', 
-            data: { 
-                text: input.current.value.trim()
-            }, 
-            headers: { Authorization: token }
-        })
-        .then(response => {
-            console.log('new todo response: ', response.data); 
-            setTodoList([response.data, ...todoList]);
-        })
-        .catch(e => console.log(e.response));
+        requestNew({ text: input.current.value.trim()});
     }
 
     const EditTodo = () => {    
-        editTodo(editItem, {text: input.current.value.trim(), toggle: false}, (error) => {
-            if(!error)
-                setEditItem(null);
-            else
-                console.log(error);
+        requestEdit(editItem, {text: input.current.value.trim(), toggle: false}, () => {
+            setEditItem(null);
         });
-
-        // axios({ 
-        //     method: 'patch', 
-        //     url: `/edit/${editItem._id}`, 
-        //     data: { text: input.current.value.trim() }, 
-        //     headers: { Authorization: token }
-        // })
-        // .then(response => {
-        //     if(response.status === 200) {
-        //         console.log('buraya mi giriyorsun');
-        //         console.log(response.data);
-        //         setTodoList(todoList.map(item => item._id === editItem._id ? response.data : item));
-        //         getList();
-        //         setEditItem(null); // kalacak
-        //     }
-        // })
-        // .catch(e => {
-        //     if(e.response.data)
-        //         console.log(e.response.data.error);
-        //     else
-        //         console.log(e.response.statusText);
-        //     // console.log(todoList);
-        // });
-
     }
 
     const onClose = () => {

@@ -9,6 +9,7 @@ export const AppProvider = ({children}) => {
     const [ filter, setFilter ] = useState('all');
     const [ searchFilter, setSearchFilter ] = useState('');
     const [ token, setToken ] = useState();
+    const [ error, setError ] = useState(null);
 
     return (
         <AppContext.Provider value={{
@@ -23,7 +24,9 @@ export const AppProvider = ({children}) => {
             searchFilter,
             setSearchFilter,
             token,
-            setToken
+            setToken,
+            error,
+            setError
         }}>
             {children}
         </AppContext.Provider>

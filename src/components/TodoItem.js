@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { ImPencil, ImBin2 } from 'react-icons/im';
 import AppContext from "../contexts/AppContext";
-import useApiRequest from "../hooks/useApiRequest";
+import useApiRequest from '../hooks/useApiRequest';
 
 const TodoItem = ({ item }) => {
     const { todoList, setTodoList, setShowModal, setEditItem } = useContext(AppContext);
-    const editTodo = useApiRequest();
+    const { requestEdit } = useApiRequest();
 
     const handleCheckboxChange = () => {
-        editTodo(item, {toggle: true}, (error) => {
+        requestEdit(item, {toggle: true}, (error) => {
             if(error)
                 console.log(error);
         })

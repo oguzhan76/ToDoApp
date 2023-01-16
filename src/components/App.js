@@ -7,41 +7,49 @@ import Header from "./Header";
 import axios from "axios";
 
 const App = () => {
-    const { setTodoList, token, setToken } = useContext(AppContext);
-    // console.log('app rendered', todoList);
+    const { error, setError, setTodoList, token, setToken } = useContext(AppContext);
     const navigate = useNavigate();
-    const [ error, setError ] = useState();
 
     useEffect(() => {
-        console.log('Component did mount useEffect');
+        console.log('Component did mount');
+
         const fetchData = async () => {
             try {
+                if(token) return;
+
                 const response = await axios.get('/access_token');
                 if(!response.headers.authorization)
                     navigate('/login');
+                else
+                    setToken(response.headers.authorization);
 
-                setToken(response.headers.authorization);
                 const listResponse = await axios.get("/getList", { headers: { authorization: response.headers.authorization }});
                 console.log('got the list from server: ', listResponse.data);
                 setTodoList(listResponse.data);
+                setError(null);
             } catch (e) {
-                if (!e.response) 
+                console.log(e);
+                if (e.response.status === 401) navigate('/login');
+                else if (e.response) 
+                    setError(e.response.data.error || e.response.statusText);    
+                else if (e.request)
                     setError('Server is not responding.');
-                else
-                    setError(e.response.data);            
             }
         }
-
         fetchData();
     }, []);
 
+    // useEffect(() => setError(null));
+
     return (
-        !token ? error && <p className='login-error-message'>{error}</p> :
-        <div className="homepage">
-            <div className="app">
-                <Header />
-                <TodoList />
-                <CreateOrEditModal />
+        <div>
+            {error && <p className='login-error-message'>{error}</p>}
+            <div className="homepage">
+                <div className="app">
+                    <Header />
+                    <TodoList />
+                    <CreateOrEditModal />
+                </div>
             </div>
         </div>
     )

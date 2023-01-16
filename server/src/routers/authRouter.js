@@ -14,7 +14,7 @@ const cookiesSettings = {
 // handshake
 router.get('/access_token', authByRefresh, async (req, res) => {
     if(!req.user)
-        return res.send(); 
+        return res.send(); // send error
     try {
         const user = req.user;
         await user.generateAuthTokens(); 

@@ -1,25 +1,29 @@
 const express = require('express');
-const User = require('../models/user');
+// const User = require('../models/user');
 const Todo = require('../models/todo');
 const { authByAccess } = require('../middleware/auth');
 const formatDate = require('../utils/formatDate');
-const { formToJSON } = require('axios');
 
 const router = new express.Router();
 
 router.post('/newtodo', authByAccess, async (req, res) => {
-    const user = req.user;
-    const newTodo = new Todo({ 
-        ...req.body,
-        owner: user._id
-    });
-    await newTodo.save();
-    res.status(201).send({ 
+    try {
+        const user = req.user;
+        const newTodo = new Todo({ 
+            ...req.body,
+            owner: user._id
+        });
+        await newTodo.save();
+        
+        res.status(201).send({ 
         _id: newTodo._id, 
         completed: newTodo.completed,
         text: newTodo.text,    
         date: formatDate(newTodo.createdAt)
     });
+    } catch (error) {
+        return res.status(500).send({ error: error._message});
+    }
 });
 
 router.patch('/edit/:id', authByAccess, async(req, res) => {
@@ -34,9 +38,15 @@ router.patch('/edit/:id', authByAccess, async(req, res) => {
 });
 
 router.get('/getList', authByAccess, async (req, res) => {
-    const user = await req.user.populate('todos'); //{path: 'todos', select:['completed', 'text', 'createdAt' ]});
-    const list = user.todos.map(todo => todo.ReadyForClient()).reverse();
-    res.send(list);
+    try {
+        const user = await req.user.populate('todos'); //{path: 'todos', select:['completed', 'text', 'createdAt' ]});
+        const list = user.todos.map(todo => todo.ReadyForClient()).reverse();
+        // throw new Error('ebeniz hakli')
+        res.status(200).send(list);
+    } catch (error) { // if mongoose error, theres error.name
+        console.log(error);
+        res.status(500).send({error: error.message});
+    }
 });
 
 module.exports = router;

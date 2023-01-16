@@ -7,9 +7,10 @@ const authByAccess = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
         const user = await User.findOne({ _id: decoded._id});
         
-        if(!user) throw new Error(`User has no authorization`);
-        if(user.access_token === token)
-            req.user = user;
+        if(!user || user.access_token !== token)
+            throw new Error(`User has no authorization`);
+        
+        req.user = user;
         next();
 
     } catch (e) {
@@ -17,19 +18,27 @@ const authByAccess = async (req, res, next) => {
     }
 }
 
+// test this one
 const authByRefresh = async (req, res, next) => { 
-    if(!req.cookies.refresh_token) return next();
     try{
+        if(!req.cookies.refresh_token) {
+            console.log('refresh cookie gelmedi');    
+            throw new Error();
+        }
         const token = req.cookies.refresh_token;
         const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
         const user = await User.findOne({ _id: decoded._id});
         
-        if(!user) throw new Error(`Couldn't find the user`);
-        if(user.refresh_token === token)
-            req.user = user
+        if(!user || user.refresh_token !== token) {
+            console.log('user yok yada bu token userda yok');
+            throw new Error();
+        }
+        
+        req.user = user
         next();
     }
     catch (e) {
+        console.log('sent 401')
         res.status(401).send({error: e.message || "Authorization Error."});
     }
 }
