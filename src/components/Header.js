@@ -1,15 +1,16 @@
-import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import AppContext from "../contexts/AppContext";
 import {FiLogOut} from 'react-icons/fi';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
-import axios from "axios";
+import useApiRequest from "../hooks/useApiRequest";
 
 const Header = () => {
-    const navigate = useNavigate();
-    const { token, setShowModal, setFilter, setSearchFilter } = useContext(AppContext);
+    const { todoList, setShowModal, setFilter, setSearchFilter } = useContext(AppContext);
     const [ showDialog, setShowDialog ] = useState(false);
+    const { requestLogout } = useApiRequest();
+
+    console.log('header rendered list, ', todoList);
 
     const handleDropdownChange = (e) => {
         setFilter(e.target.value);
@@ -17,13 +18,18 @@ const Header = () => {
     }
 
     const handleLogout = () => {
-        axios.get('/logout', { headers: { Authorization: token } })
-        .then(response => {
-            if(response.data.logout)
-                navigate('/login');
-        })
-        .catch(e => console.log(e.message));
+        requestLogout();
     }
+
+    const countCompleted = () => {
+        let count = 0;
+        todoList.forEach(element => {
+            if(element.completed) count += 1;
+        }); 
+        console.log('count, ', count);
+        return count;
+    }
+
 
     return (
         <div className="header">
@@ -37,8 +43,11 @@ const Header = () => {
                     </select>
                     <button className="logout-button login-button" onClick={() => setShowDialog(true)}><FiLogOut /></button>
                 </div>
+            </div>
+            <div className="search-bar-container">
+                <input className="search-bar" type='text' placeholder='Search' onChange={(e) => setSearchFilter(e.target.value)}></input>
+                <p>{countCompleted()} / {todoList && todoList.length}</p>
             </div>    
-            <input className="search-bar" type='text' placeholder='Search' onChange={(e) => setSearchFilter(e.target.value)}></input>
             
             <Rodal
                 className='logout-dialog'

@@ -2,7 +2,6 @@ import React, { useContext, useRef } from 'react';
 import AppContext from '../contexts/AppContext';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
-import axios from 'axios';
 import useApiRequest from '../hooks/useApiRequest';
 
 
@@ -10,30 +9,24 @@ const CreateOrEditModal = () => {
     const { showModal, 
             setShowModal, 
             editItem, 
-            setEditItem,
-            setError } = useContext(AppContext);
+            setEditItem } = useContext(AppContext);
     const input = useRef();
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-            if(editItem) 
-                EditTodo();
-            else
-                CreateTodo();
-        e.target.reset();
-        setShowModal(false);
-    }
 
     const {requestEdit, requestNew } = useApiRequest();
 
-    const CreateTodo = () => {
-        requestNew({ text: input.current.value.trim()});
-    }
 
-    const EditTodo = () => {    
-        requestEdit(editItem, {text: input.current.value.trim(), toggle: false}, () => {
-            setEditItem(null);
-        });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+            if(editItem) {
+                requestEdit(editItem, {text: input.current.value.trim(), toggle: false}, () => {
+                    setEditItem(null);
+                });
+            } else {
+                requestNew({ text: input.current.value.trim()});
+            }
+        e.target.reset();
+        setShowModal(false);
     }
 
     const onClose = () => {

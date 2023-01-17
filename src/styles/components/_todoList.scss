@@ -11,7 +11,7 @@
 
 .list-row.completed {
     background-color: darken($darkList, 30%);
-
+    
     .list-row-item-date { 
         color: darken($textDates, 20%);
     }
@@ -38,7 +38,7 @@
 
     button {
         background-color: rgba($color: #000000, $alpha: 0);
-        color: darken($darkList,40%);
+        color: $listItemButtons;//darken($darkList,40%);
         border: none;
         padding: 0 0 0 0;
         height: $l-size;

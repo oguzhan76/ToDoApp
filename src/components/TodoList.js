@@ -5,6 +5,7 @@ import AppContext from "../contexts/AppContext";
 const TodoList = () => {
     const { filter, todoList, searchFilter } = useContext(AppContext);
 
+    console.log('todolist rendered, list: ', todoList);
     const filteredList = useMemo(() => {
         if (!todoList) return [];
         

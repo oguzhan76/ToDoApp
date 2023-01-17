@@ -29,7 +29,7 @@ export default function useApiRequest() {
                 setTodoList(todoList.map(item => item._id === editItem._id ? response.data : item));
             }
             setError(null);
-            callback(null);
+            if(callback) callback();
         } catch (e) {
             handleErrors(e);
         }
@@ -65,5 +65,15 @@ export default function useApiRequest() {
         }
     }
 
-    return { requestEdit, requestNew, requestDelete };
+    const requestLogout = async () => {
+        try {
+            const response = await axios.get('/logout', { headers: { Authorization: token } })
+            if(response.data.logout)
+                navigate('/login');
+        } catch (e) {
+            handleErrors(e);
+        }
+    }
+
+    return { requestEdit, requestNew, requestDelete, requestLogout };
 }

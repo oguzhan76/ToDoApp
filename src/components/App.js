@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../contexts/AppContext";
 import CreateOrEditModal from './CreateOrEditModal';
@@ -38,8 +38,6 @@ const App = () => {
         }
         fetchData();
     }, []);
-
-    // useEffect(() => setError(null));
 
     return (
         <div>

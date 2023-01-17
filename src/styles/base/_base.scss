@@ -37,3 +37,9 @@ button:hover {
     color: $buttonTextHover;
     border-color: white;
 }
+
+@media(max-width: $mobile-bp) {
+    .homepage {
+        margin-top: 0;
+    }
+}

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Todo = require('./todo');
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -43,6 +44,12 @@ userSchema.pre('save', async function(next) {
         user.password = await bcrypt.hash(user.password, 8);
     }
 
+    next();
+});
+
+// remove all todos of user when user is deleted
+userSchema.pre('remove', async function(next) {
+    await Todo.deleteMany({ owner: this._id});
     next();
 });
 

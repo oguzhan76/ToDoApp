@@ -29,7 +29,7 @@ router.post('/newtodo', authByAccess, async (req, res) => {
 router.patch('/edit/:id', authByAccess, async(req, res) => {
     console.log('requested a patch ', req.body);
     try {
-        const todo = await Todo.findByIdAndUpdate(req.params.id, req.body, { new: true});
+        const todo = await Todo.findOneAndUpdate({_id: req.params.id, owner: req.user._id }, req.body, { new: true});
         // throw new Error('bu error mesaji');
         res.status(200).send(todo.ReadyForClient());
     } catch (e) {

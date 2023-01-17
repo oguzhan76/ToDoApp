@@ -4,14 +4,11 @@ import AppContext from "../contexts/AppContext";
 import useApiRequest from '../hooks/useApiRequest';
 
 const TodoItem = ({ item }) => {
-    const { todoList, setTodoList, setShowModal, setEditItem } = useContext(AppContext);
+    const { setShowModal, setEditItem } = useContext(AppContext);
     const { requestEdit, requestDelete } = useApiRequest();
 
     const handleCheckboxChange = () => {
-        requestEdit(item, {toggle: true}, (error) => {
-            if(error)
-                console.log(error);
-        })
+        requestEdit(item, {toggle: true});
     }
 
     const handleEdit = () => {
