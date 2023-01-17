@@ -5,7 +5,7 @@ import useApiRequest from '../hooks/useApiRequest';
 
 const TodoItem = ({ item }) => {
     const { todoList, setTodoList, setShowModal, setEditItem } = useContext(AppContext);
-    const { requestEdit } = useApiRequest();
+    const { requestEdit, requestDelete } = useApiRequest();
 
     const handleCheckboxChange = () => {
         requestEdit(item, {toggle: true}, (error) => {
@@ -20,7 +20,8 @@ const TodoItem = ({ item }) => {
     }
 
     const handleDelete = () => {
-        setTodoList(todoList.filter(todo => item._id !== todo._id));
+        // setTodoList(todoList.filter(todo => item._id !== todo._id));
+        requestDelete(item._id);
     }
 
     return (

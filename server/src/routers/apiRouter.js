@@ -37,6 +37,15 @@ router.patch('/edit/:id', authByAccess, async(req, res) => {
     }
 });
 
+router.delete('/delete/:id', authByAccess, async(req, res) => {
+    try {
+        await Todo.findOneAndDelete({_id: req.params.id, owner: req.user._id});
+        res.status(200).send();
+    } catch (e) {
+        res.status(500).send({ error: e.message });
+    }
+});
+
 router.get('/getList', authByAccess, async (req, res) => {
     try {
         const user = await req.user.populate('todos'); //{path: 'todos', select:['completed', 'text', 'createdAt' ]});

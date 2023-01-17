@@ -51,5 +51,19 @@ export default function useApiRequest() {
         }
     }
 
-    return { requestEdit, requestNew };
+    const requestDelete = async (id) => {
+        try {
+            await axios( {
+                method: 'delete',
+                url: `/delete/${id}`,
+                headers: { Authorization: token }
+            });
+            console.log('deleted');
+            setTodoList(todoList.filter(todo => id !== todo._id));
+        } catch (e) {
+            handleErrors(e);
+        }
+    }
+
+    return { requestEdit, requestNew, requestDelete };
 }
