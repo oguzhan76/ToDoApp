@@ -47,7 +47,9 @@ router.delete('/delete/:id', authByAccess, async(req, res) => {
 });
 
 router.get('/getList', authByAccess, async (req, res) => {
+    console.log('get list req');
     try {
+        console.log('api ', req.user);
         const user = await req.user.populate('todos'); //{path: 'todos', select:['completed', 'text', 'createdAt' ]});
         const list = user.todos.map(todo => todo.ReadyForClient()).reverse();
         // throw new Error('ebeniz hakli')

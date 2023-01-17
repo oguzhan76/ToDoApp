@@ -14,24 +14,29 @@ const App = () => {
         console.log('Component did mount');
 
         const fetchData = async () => {
+            console.log('fetch data runs');
             try {
-                if(token) return;
+                // When directed from login screen we have token, only when page is refreshed it is null.
+                if(!token) {
+                    console.log('token yok');
+                    var response = await axios.get('/access_token');
+                    if(!response.headers.authorization)
+                       navigate('/login');
+                    else
+                        setToken(response.headers.authorization);
+                }
 
-                const response = await axios.get('/access_token');
-                if(!response.headers.authorization)
-                    navigate('/login');
-                else
-                    setToken(response.headers.authorization);
-
-                const listResponse = await axios.get("/getList", { headers: { authorization: response.headers.authorization }});
+                const listResponse = await axios.get("/getList", { headers: { authorization: token || response.headers.authorization }});
                 console.log('got the list from server: ', listResponse.data);
                 setTodoList(listResponse.data);
                 setError(null);
             } catch (e) {
                 console.log(e);
-                if (e.response.status === 401) navigate('/login');
-                else if (e.response) 
-                    setError(e.response.data.error || e.response.statusText);    
+                if (e.response) 
+                    if (e.response?.status === 401) 
+                        navigate('/login');
+                    else 
+                        setError(e.response.data?.error || e.response.statusText);    
                 else if (e.request)
                     setError('Server is not responding.');
             }

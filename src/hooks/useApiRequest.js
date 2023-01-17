@@ -4,7 +4,7 @@ import AppContext from "../contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 
 export default function useApiRequest() {
-    const { token, todoList, setTodoList, setError } = useContext(AppContext);
+    const { token, setToken, todoList, setTodoList, setError } = useContext(AppContext);
     const navigate = useNavigate();
 
     const handleErrors = (e) => {
@@ -68,8 +68,10 @@ export default function useApiRequest() {
     const requestLogout = async () => {
         try {
             const response = await axios.get('/logout', { headers: { Authorization: token } })
-            if(response.data.logout)
-                navigate('/login');
+            if(response.data.logout){
+                // we direct to login this way to reset every state.
+                window.location.href='/login';
+            }
         } catch (e) {
             handleErrors(e);
         }

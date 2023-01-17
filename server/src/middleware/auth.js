@@ -9,7 +9,7 @@ const authByAccess = async (req, res, next) => {
         
         if(!user || user.access_token !== token)
             throw new Error(`User has no authorization`);
-        
+        console.log('auth ', user);
         req.user = user;
         next();
 
