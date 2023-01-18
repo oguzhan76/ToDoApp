@@ -6,33 +6,34 @@ import AppContext from '../contexts/AppContext';
 
 const SignupPage = () => {
     const { setToken } = useContext(AppContext);
-    const navigate = useNavigate();
     const [ success, setSuccess ] = useState(false);
     const [ error, setError ] = useState();
     const userRef = useRef();
+    const navigate = useNavigate();
 
     useEffect(() => {
         userRef.current.focus();
     }, []);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        axios.post('/signup', { 
-            username: e.target.username.value,
-            password: e.target.password.value 
-        })
-        .then(response => {
+        try {
+            const response = await axios.post('/signup', { 
+                username: e.target.username.value,
+                password: e.target.password.value 
+            })
+            if(!response.headers.authorization) 
+                throw new Error("Server error.");
             setSuccess(true);
-            const access_token = response.headers.authorization.replace('Bearer ', '');
-            setToken(access_token);
-        })
-        .catch(e => {
-            if (e.response.status === 500)                
+            setToken(response.headers.authorization);
+        } catch (e) {
+            if(!e.response)
+                setError(e.message);
+            else if (e.response.status === 500)                
                 setError('Server not responding.');
             else
-                setError(e.response ? e.response.data.error : e.message);
-        });
+                setError(e.response.data.error);
+        }
         e.target.password.value = '';
     }
 

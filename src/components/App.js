@@ -11,27 +11,24 @@ const App = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('Component did mount');
+        console.log('app did mount!');
 
-        const fetchData = async () => {
-            console.log('fetch data runs');
+        const Initialize = async () => {
             try {
-                // When directed from login screen we have token, only when page is refreshed it is null.
+                // When directed from login screen we have token. It is null, only when page is refreshed 
                 if(!token) {
-                    console.log('token yok');
                     var response = await axios.get('/access_token');
                     if(!response.headers.authorization)
-                       navigate('/login');
+                        navigate('/login');
                     else
                         setToken(response.headers.authorization);
                 }
 
                 const listResponse = await axios.get("/getList", { headers: { authorization: token || response.headers.authorization }});
-                console.log('got the list from server: ', listResponse.data);
+                // console.log('got the list from server: ', listResponse.data);
                 setTodoList(listResponse.data);
                 setError(null);
             } catch (e) {
-                console.log(e);
                 if (e.response) 
                     if (e.response?.status === 401) 
                         navigate('/login');
@@ -41,7 +38,14 @@ const App = () => {
                     setError('Server is not responding.');
             }
         }
-        fetchData();
+
+        Initialize();
+
+        return () => {
+            // console.log('Cleaning up!');
+            setTodoList([]);
+            setToken(null);
+        }
     }, []);
 
     return (

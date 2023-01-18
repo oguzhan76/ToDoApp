@@ -9,7 +9,6 @@ const authByAccess = async (req, res, next) => {
         
         if(!user || user.access_token !== token)
             throw new Error(`User has no authorization`);
-        console.log('auth ', user);
         req.user = user;
         next();
 
@@ -21,8 +20,7 @@ const authByAccess = async (req, res, next) => {
 // test this one
 const authByRefresh = async (req, res, next) => { 
     try{
-        if(!req.cookies.refresh_token) {
-            console.log('refresh cookie gelmedi');    
+        if(!req.cookies.refresh_token) {   
             throw new Error();
         }
         const token = req.cookies.refresh_token;
@@ -30,7 +28,6 @@ const authByRefresh = async (req, res, next) => {
         const user = await User.findOne({ _id: decoded._id});
         
         if(!user || user.refresh_token !== token) {
-            console.log('user yok yada bu token userda yok');
             throw new Error();
         }
         
@@ -38,7 +35,6 @@ const authByRefresh = async (req, res, next) => {
         next();
     }
     catch (e) {
-        console.log('sent 401')
         res.status(401).send({error: e.message || "Authorization Error."});
     }
 }

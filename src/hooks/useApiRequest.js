@@ -4,14 +4,15 @@ import AppContext from "../contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 
 export default function useApiRequest() {
-    const { token, setToken, todoList, setTodoList, setError } = useContext(AppContext);
+    const { token, todoList, setTodoList, setError } = useContext(AppContext);
     const navigate = useNavigate();
 
     const handleErrors = (e) => {
-        console.log(e);
-        if (e.response.status === 401) navigate('/login');
-        else if (e.response) 
-            setError(e.response.data.error || e.response.statusText);    
+        if (e.response) 
+            if (e.response?.status === 401) 
+                navigate('/login');
+            else 
+                setError(e.response.data?.error || e.response.statusText);    
         else if (e.request)
             setError('Server is not responding.');
     }
@@ -23,7 +24,7 @@ export default function useApiRequest() {
                 url: `/edit/${editItem._id}`, 
                 data: toggle ? { completed: !editItem.completed } : { text }, 
                 headers: { Authorization: token }
-            })
+            });
 
             if(response.status === 200) {
                 setTodoList(todoList.map(item => item._id === editItem._id ? response.data : item));
@@ -42,8 +43,7 @@ export default function useApiRequest() {
                 url: '/newtodo', 
                 data:  { text }, 
                 headers: { Authorization: token }
-            })
-            console.log('new todo response: ', response.data); 
+            });
             setTodoList([response.data, ...todoList]);
             setError(null);
         } catch(e) {
@@ -58,7 +58,6 @@ export default function useApiRequest() {
                 url: `/delete/${id}`,
                 headers: { Authorization: token }
             });
-            console.log('deleted');
             setTodoList(todoList.filter(todo => id !== todo._id));
         } catch (e) {
             handleErrors(e);
@@ -68,10 +67,8 @@ export default function useApiRequest() {
     const requestLogout = async () => {
         try {
             const response = await axios.get('/logout', { headers: { Authorization: token } })
-            if(response.data.logout){
-                // we direct to login this way to reset every state.
-                window.location.href='/login';
-            }
+            if(response.data.logout)
+                navigate('/login');
         } catch (e) {
             handleErrors(e);
         }

@@ -7,7 +7,7 @@ import NotFoundPage from "./components/NotFoundPage";
 import { AppProvider } from "./contexts/AppContext";
 
 const AppRouter = () => {
-    
+
     return (
         <BrowserRouter>
             <AppProvider>

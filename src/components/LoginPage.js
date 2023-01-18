@@ -29,10 +29,12 @@ const LoginPage = () => {
             else throw new Error('Login Failed!')
         })
         .catch(e => {
-            if (!e.response)                
-                setError('Server is not responding.');
+            if(!e.response)
+                setError(e.message);
+            else if (e.response.status === 500)                
+                setError('Server not responding.');
             else
-                setError(e.response.data ? e.response.data.error : e.message);
+                setError(e.response.data.error);
         });
     
         e.target.password.value = '';

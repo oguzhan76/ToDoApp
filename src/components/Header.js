@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext } from "react";
 import AppContext from "../contexts/AppContext";
-import {FiLogOut} from 'react-icons/fi';
+import { FiLogOut } from 'react-icons/fi';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
 import useApiRequest from "../hooks/useApiRequest";
@@ -10,11 +10,10 @@ const Header = () => {
     const [ showDialog, setShowDialog ] = useState(false);
     const { requestLogout } = useApiRequest();
 
-    console.log('header rendered list, ', todoList);
-
     const handleDropdownChange = (e) => {
         setFilter(e.target.value);
-        e.target.blur(); //takes focus away so that :hover works
+        //takes focus away so that :hover works
+        e.target.blur();
     }
 
     const handleLogout = () => {
@@ -26,7 +25,6 @@ const Header = () => {
         todoList.forEach(element => {
             if(element.completed) count += 1;
         }); 
-        console.log('count, ', count);
         return count;
     }
 
