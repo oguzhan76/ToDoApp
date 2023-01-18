@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon src/server.js",
+    "server": "node src/server.js",
     "dev-server": "env-cmd -f ./config/dev.env nodemon src/server.js"
   },
   "author": "",
