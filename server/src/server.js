@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -33,10 +33,3 @@ app.get("*", (req, res) => {
 });
 
 app.listen(port, () => console.log(`server is on ${port}` ));
-
-
-
-
-
-// database username: oguzhan
-// password: GJsTTvGq2GoPeZJR
