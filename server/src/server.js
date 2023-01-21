@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -14,10 +15,10 @@ const app = express();
 
 const port = process.env.PORT || 5000;
 const buildPath = path.join(__dirname, '../../build');
-const corsOptions = {
-    origin: '127.0.0.1',
-    optionsSuccessStatus: 200
-}
+// const corsOptions = {
+//     origin: '127.0.0.1',
+//     optionsSuccessStatus: 200
+// }
 
 app.use(cors());
 app.use(cookieParser());

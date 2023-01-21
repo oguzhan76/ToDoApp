@@ -11,7 +11,6 @@ const App = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('app did mount!');
 
         const Initialize = async () => {
             try {
