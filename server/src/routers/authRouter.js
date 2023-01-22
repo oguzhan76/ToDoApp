@@ -9,8 +9,8 @@ const router = new express.Router();
 const cookiesSettings = {
     maxAge: 86400000, // 1 day
     httpOnly: true,
-    sameSite: true,
-    secure: false
+    sameSite: false,
+    secure: true
 }
 
 const serverlog = async (message) => {
