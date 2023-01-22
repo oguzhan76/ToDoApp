@@ -17,7 +17,7 @@ const App = () => {
                 // When directed from login screen we have token. It is null, only when page is refreshed 
                 if(!token) {
                     console.log('sent refresh req');
-                    console.log(process.env.API_URL);
+                    console.log(process.env.REACT_APP_API_URL);
                     var response = await axiosInstance.get('/access_token');
                     console.log(response);
                     if(!response.headers.authorization)
