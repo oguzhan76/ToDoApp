@@ -13,7 +13,7 @@ mongoose.connect(process.env.MONGODB_URL);
 
 const app = express();
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 6000;
 const buildPath = path.join(__dirname, '../../client/build');
 
 const corsOptions = {
@@ -32,5 +32,5 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(buildPath, 'index.html'));
 });
 
-module.exports = app;
-// app.listen(port, () => console.log(`server is on ${port}` ));
+// module.exports = app;
+app.listen(port, () => console.log(`server is on ${port}` ));
