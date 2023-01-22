@@ -4,7 +4,6 @@ import AppContext from "../contexts/AppContext";
 import CreateOrEditModal from './CreateOrEditModal';
 import TodoList from './TodoList';
 import Header from "./Header";
-// import axios from "axios";
 import axiosInstance from "../axios";
 
 const App = () => {
@@ -17,7 +16,9 @@ const App = () => {
             try {
                 // When directed from login screen we have token. It is null, only when page is refreshed 
                 if(!token) {
+                    console.log('sent refresh req');
                     var response = await axiosInstance.get('/access_token');
+                    console.log(response);
                     if(!response.headers.authorization)
                         navigate('/login');
                     else
@@ -29,6 +30,7 @@ const App = () => {
                 setTodoList(listResponse.data);
                 setError(null);
             } catch (e) {
+                console.log(e);
                 if (e.response) 
                     if (e.response?.status === 401) 
                         navigate('/login');

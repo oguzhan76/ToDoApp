@@ -15,11 +15,11 @@ router.post('/newtodo', authByAccess, async (req, res) => {
         await newTodo.save();
         
         res.status(201).send({ 
-        _id: newTodo._id, 
-        completed: newTodo.completed,
-        text: newTodo.text,    
-        date: formatDate(newTodo.createdAt)
-    });
+            _id: newTodo._id, 
+            completed: newTodo.completed,
+            text: newTodo.text,    
+            date: formatDate(newTodo.createdAt)
+        });
     } catch (error) {
         return res.status(500).send({ error: error._message});
     }

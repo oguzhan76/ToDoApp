@@ -1,5 +1,7 @@
 const express = require('express');
 const User = require('../models/user');
+const Log = require('../models/serverlog');
+const formatDate = require('../utils/formatDate');
 const { authByRefresh, authByAccess }  = require('../middleware/auth');
 
 const router = new express.Router();
@@ -11,8 +13,20 @@ const cookiesSettings = {
     secure: false
 }
 
+const serverlog = async (message) => {
+    try {
+        const log = new Log({
+            log: message,
+            time: formatDate(Date.now())
+        });
+        await log.save();
+    } catch (e) {
+
+    }
+}
+
 // handshake
-router.get('/access_token', authByRefresh, async (req, res) => {
+router.get('/access_token', authByRefresh, async (req, res) => {    
     if(!req.user)
         return res.status(401).send(); // send error
     try {
@@ -27,6 +41,9 @@ router.get('/access_token', authByRefresh, async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
+    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    serverlog('login request from ' + fullUrl + ' - with data: ' + JSON.stringify(req.body));
+    console.log(fullUrl);
     try {
         const user = await User.findByCredentials(req.body.username, req.body.password);
         await user.generateAuthTokens();

@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-// import axios from 'axios';
 import axiosInstance from '../axios';
 import { useNavigate, NavLink } from 'react-router-dom';
 import AppContext from '../contexts/AppContext';
