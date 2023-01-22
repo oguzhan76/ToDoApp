@@ -1,5 +1,4 @@
 const express = require('express');
-// const User = require('../models/user');
 const Todo = require('../models/todo');
 const { authByAccess } = require('../middleware/auth');
 const formatDate = require('../utils/formatDate');
@@ -27,7 +26,6 @@ router.post('/newtodo', authByAccess, async (req, res) => {
 });
 
 router.patch('/edit/:id', authByAccess, async(req, res) => {
-    console.log('requested a patch ', req.body);
     try {
         const todo = await Todo.findOneAndUpdate({_id: req.params.id, owner: req.user._id }, req.body, { new: true});
         // throw new Error('bu error mesaji');
@@ -49,7 +47,6 @@ router.delete('/delete/:id', authByAccess, async(req, res) => {
 router.get('/getList', authByAccess, async (req, res) => {
     console.log('get list req');
     try {
-        console.log('api ', req.user);
         const user = await req.user.populate('todos'); //{path: 'todos', select:['completed', 'text', 'createdAt' ]});
         const list = user.todos.map(todo => todo.ReadyForClient()).reverse();
         // throw new Error('ebeniz hakli')

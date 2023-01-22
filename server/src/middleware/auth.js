@@ -21,7 +21,7 @@ const authByAccess = async (req, res, next) => {
 const authByRefresh = async (req, res, next) => { 
     try{
         if(!req.cookies.refresh_token) {   
-            throw new Error();
+            throw new Error('Unauthorized. You need to login!');
         }
         const token = req.cookies.refresh_token;
         const decoded = jwt.verify(token, process.env.JWT_REFRESH_SECRET);
