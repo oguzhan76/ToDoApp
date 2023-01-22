@@ -4,7 +4,8 @@ import AppContext from "../contexts/AppContext";
 import CreateOrEditModal from './CreateOrEditModal';
 import TodoList from './TodoList';
 import Header from "./Header";
-import axios from "axios";
+// import axios from "axios";
+import axiosInstance from "../axios";
 
 const App = () => {
     const { error, setError, setTodoList, token, setToken } = useContext(AppContext);
@@ -16,14 +17,14 @@ const App = () => {
             try {
                 // When directed from login screen we have token. It is null, only when page is refreshed 
                 if(!token) {
-                    var response = await axios.get('/access_token');
+                    var response = await axiosInstance.get('/access_token');
                     if(!response.headers.authorization)
                         navigate('/login');
                     else
                         setToken(response.headers.authorization);
                 }
 
-                const listResponse = await axios.get("/getList", { headers: { authorization: token || response.headers.authorization }});
+                const listResponse = await axiosInstance.get("/getList", { headers: { authorization: token || response.headers.authorization }});
                 // console.log('got the list from server: ', listResponse.data);
                 setTodoList(listResponse.data);
                 setError(null);

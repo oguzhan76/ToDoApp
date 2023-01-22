@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useContext }  from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import axiosInstance from '../axios';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import AppContext from '../contexts/AppContext';
@@ -18,7 +19,7 @@ const SignupPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/signup', { 
+            const response = await axiosInstance.post('/signup', { 
                 username: e.target.username.value,
                 password: e.target.password.value 
             })

@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import axios from "axios";
+// import axios from "axios";
+import axiosInstance from "../axios";
 import AppContext from "../contexts/AppContext";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +20,7 @@ export default function useApiRequest() {
 
     const requestEdit = async (editItem, { text, toggle }, callback) => {
         try {
-            const response = await axios({ 
+            const response = await axiosInstance({ 
                 method: 'patch', 
                 url: `/edit/${editItem._id}`, 
                 data: toggle ? { completed: !editItem.completed } : { text }, 
@@ -38,7 +39,7 @@ export default function useApiRequest() {
 
     const requestNew = async ({ text }) => {
         try {
-            const response = await axios({
+            const response = await axiosInstance({
                 method: 'post',
                 url: '/newtodo', 
                 data:  { text }, 
@@ -53,7 +54,7 @@ export default function useApiRequest() {
 
     const requestDelete = async (id) => {
         try {
-            await axios( {
+            await axiosInstance( {
                 method: 'delete',
                 url: `/delete/${id}`,
                 headers: { Authorization: token }
@@ -66,7 +67,7 @@ export default function useApiRequest() {
 
     const requestLogout = async () => {
         try {
-            const response = await axios.get('/logout', { headers: { Authorization: token } })
+            const response = await axiosInstance.get('/logout', { headers: { Authorization: token } })
             if(response.data.logout)
                 navigate('/login');
         } catch (e) {

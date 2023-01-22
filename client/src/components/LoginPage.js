@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import axiosInstance from '../axios';
 import { useNavigate, NavLink } from 'react-router-dom';
 import AppContext from '../contexts/AppContext';
 
@@ -14,28 +15,30 @@ const LoginPage = () => {
     }, []);
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        axios.post('/login', { 
-            username: e.target.username.value,
-            password: e.target.password.value 
-        })
-        .then(response => {
-            if(response.headers.authorization) {
-                setToken(response.headers.authorization);
-                navigate('/');
-            }
-            else throw new Error('Login Failed!')
-        })
-        .catch(e => {
+        try {
+        const response = await axiosInstance( {
+            method: 'post',
+            url: '/login',
+            data: { 
+                    username: e.target.username.value,
+                    password: e.target.password.value 
+                }});
+        console.log(response);
+        if(response.headers.authorization) {
+            setToken(response.headers.authorization);
+            navigate('/');
+        }
+        else throw new Error('Login Failed!');
+        } catch(e) {
             if(!e.response)
                 setError(e.message);
             else if (e.response.status === 500)                
                 setError('Server not responding.');
             else
                 setError(e.response.data.error);
-        });
+        }
     
         e.target.password.value = '';
     }
