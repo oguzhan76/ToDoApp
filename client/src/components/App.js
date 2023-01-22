@@ -21,7 +21,7 @@ const App = () => {
                     var response = await axiosInstance.get('/access_token');
                     console.log(response);
                     if(!response.headers.authorization)
-                        navigate('/login');
+                        navigate('/login'); // burdan return edelim
                     else
                         setToken(response.headers.authorization);
                 }

@@ -9,7 +9,6 @@ const router = new express.Router();
 const cookiesSettings = {
     maxAge: 86400000, // 1 day
     httpOnly: true,
-    sameSite: false,
     secure: true
 }
 
