@@ -32,5 +32,5 @@ app.get("*", (req, res) => {
     res.sendFile(path.join(buildPath, 'index.html'));
 });
 
-// module.exports = app;
-app.listen(port, () => console.log(`server is on ${port}` ));
+module.exports = app;
+// app.listen(port, () => console.log(`server is on ${port}` ));
