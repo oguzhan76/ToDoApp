@@ -17,17 +17,21 @@ const App = () => {
                 // When directed from login screen we have token. It is null, only when page is refreshed 
                 if(!token) {
                     console.log('sent refresh req');
-                    console.log(process.env.REACT_APP_API_URL);
-                    var response = await axiosInstance.get('/access_token');
+                    var response = await axiosInstance({
+                        method: 'get',
+                        url: '/access_token',
+                        withCredentials: true
+                    });
+
                     console.log(response);
+
                     if(!response.headers.authorization)
-                        navigate('/login'); // burdan return edelim
+                        return navigate('/login'); 
                     else
                         setToken(response.headers.authorization);
                 }
 
                 const listResponse = await axiosInstance.get("/getList", { headers: { authorization: token || response.headers.authorization }});
-                // console.log('got the list from server: ', listResponse.data);
                 setTodoList(listResponse.data);
                 setError(null);
             } catch (e) {

@@ -17,6 +17,8 @@ const port = process.env.PORT || 5000;
 const buildPath = path.join(__dirname, '../../client/build');
 
 const corsOptions = {
+    credentials: true,
+    origin: true,
     exposedHeaders: 'Authorization'
 };
 

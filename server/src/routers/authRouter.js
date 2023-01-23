@@ -7,7 +7,7 @@ const { authByRefresh, authByAccess }  = require('../middleware/auth');
 const router = new express.Router();
 
 const cookiesSettings = {
-    maxAge: 86400000, // 1 day
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days,
     httpOnly: true,
     secure: true,
     sameSite: 'none'
@@ -27,6 +27,7 @@ const serverlog = async (message) => {
 
 // handshake
 router.get('/access_token', authByRefresh, async (req, res) => {    
+    console.log('got refresh req');
     if(!req.user)
         return res.status(401).send(); // send error
     try {

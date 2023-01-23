@@ -21,9 +21,11 @@ const LoginPage = () => {
             method: 'post',
             url: '/login',
             data: { 
-                    username: e.target.username.value,
-                    password: e.target.password.value 
-                }});
+                username: e.target.username.value,
+                password: e.target.password.value 
+            },
+            withCredentials: true
+            });
         console.log(response);
         if(response.headers.authorization) {
             setToken(response.headers.authorization);
