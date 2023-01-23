@@ -14,16 +14,13 @@ const App = () => {
 
         const Initialize = async () => {
             try {
-                // When directed from login screen we have token. It is null, only when page is refreshed 
+                // When directed from login screen we have token. It is null, only when the page is refreshed 
                 if(!token) {
-                    console.log('sent refresh req');
                     var response = await axiosInstance({
                         method: 'get',
                         url: '/access_token',
                         withCredentials: true
                     });
-
-                    console.log(response);
 
                     if(!response.headers.authorization)
                         return navigate('/login'); 

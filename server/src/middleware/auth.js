@@ -20,8 +20,7 @@ const authByAccess = async (req, res, next) => {
 // test this one
 const authByRefresh = async (req, res, next) => { 
     try{
-        if(!req.cookies.refresh_token) {   
-            console.log("didn't get refresh cookie")
+        if(!req.cookies.refresh_token) {  
             throw new Error('Unauthorized. You need to login!');
         }
         const token = req.cookies.refresh_token;

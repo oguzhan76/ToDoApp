@@ -17,21 +17,20 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-        const response = await axiosInstance( {
-            method: 'post',
-            url: '/login',
-            data: { 
-                username: e.target.username.value,
-                password: e.target.password.value 
-            },
-            withCredentials: true
+            const response = await axiosInstance( {
+                method: 'post',
+                url: '/login',
+                data: { 
+                    username: e.target.username.value,
+                    password: e.target.password.value 
+                },
+                withCredentials: true
             });
-        console.log(response);
-        if(response.headers.authorization) {
-            setToken(response.headers.authorization);
-            navigate('/');
-        }
-        else throw new Error('Login Failed!');
+            if(response.headers.authorization) {
+                setToken(response.headers.authorization);
+                return navigate('/');
+            }
+            else throw new Error('Login Failed!');
         } catch(e) {
             if(!e.response)
                 setError(e.message);
