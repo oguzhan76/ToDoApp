@@ -50,7 +50,6 @@ router.get('/getList', authByAccess, async (req, res) => {
     try {
         const user = await req.user.populate('todos'); //{path: 'todos', select:['completed', 'text', 'createdAt' ]});
         const list = user.todos.map(todo => todo.ReadyForClient()).reverse();
-        // throw new Error('ebeniz hakli')
         res.status(200).send(list);
     } catch (error) { // if mongoose error, theres error.name
         console.log(error);
