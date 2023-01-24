@@ -31,7 +31,7 @@ const TodoItem = ({ item }) => {
                 </div>
             </div>
             <div className="list-row-item">
-                <button onClick={() => handleEdit(item)}><ImPencil /></button>
+                <button className="list-item__edit-button" onClick={() => handleEdit(item)}><ImPencil /></button>
                 <button onClick={() => handleDelete(item)}><ImBin2 /></button>
             </div>
         </div>

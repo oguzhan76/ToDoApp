@@ -32,7 +32,7 @@ const App = () => {
                 setTodoList(listResponse.data);
                 setError(null);
             } catch (e) {
-                console.log(e);
+                // console.log(e);
                 if (e.response) 
                     if (e.response?.status === 401) 
                         navigate('/login');

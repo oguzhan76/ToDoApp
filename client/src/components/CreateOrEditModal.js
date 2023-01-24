@@ -3,6 +3,7 @@ import AppContext from '../contexts/AppContext';
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
 import useApiRequest from '../hooks/useApiRequest';
+import FormatDate from '../utils.js/formatDate';
 
 
 const CreateOrEditModal = () => {
@@ -23,7 +24,12 @@ const CreateOrEditModal = () => {
                     setEditItem(null);
                 });
             } else {
-                requestNew({ text: input.current.value.trim()});
+                const date = FormatDate(Date.now());
+                console.log(date);
+                requestNew({ 
+                  text: input.current.value.trim(),
+                  date 
+                });
             }
         e.target.reset();
         setShowModal(false);

@@ -37,14 +37,15 @@ export default function useApiRequest() {
         }
     }
 
-    const requestNew = async ({ text }) => {
+    const requestNew = async ({ text, date }) => {
         try {
             const response = await axiosInstance({
                 method: 'post',
                 url: '/newtodo', 
-                data:  { text }, 
+                data:  { text, date }, 
                 headers: { Authorization: token }
             });
+            console.log(response.data);
             setTodoList([response.data, ...todoList]);
             setError(null);
         } catch(e) {

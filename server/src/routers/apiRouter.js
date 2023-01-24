@@ -1,15 +1,16 @@
 const express = require('express');
 const Todo = require('../models/todo');
 const { authByAccess } = require('../middleware/auth');
-const formatDate = require('../utils/formatDate');
 
 const router = new express.Router();
 
 router.post('/newtodo', authByAccess, async (req, res) => {
     try {
         const user = req.user;
+        console.log(req.body.date);
         const newTodo = new Todo({ 
-            ...req.body,
+            text: req.body.text,
+            createdAt: req.body.date,
             owner: user._id
         });
         await newTodo.save();
@@ -18,7 +19,7 @@ router.post('/newtodo', authByAccess, async (req, res) => {
             _id: newTodo._id, 
             completed: newTodo.completed,
             text: newTodo.text,    
-            date: formatDate(newTodo.createdAt)
+            date: newTodo.createdAt
         });
     } catch (error) {
         return res.status(500).send({ error: error._message});
